@@ -1,7 +1,9 @@
+{{ if .Values.jupyter.enabled -}}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "ard-workflow-s2.fullname" . }}
+  name: {{ include "ard-workflow-s2.fullname" . }}-jupyter
   labels:
 {{ include "ard-workflow-s2.labels" . | indent 4 }}
 spec:
@@ -29,7 +31,29 @@ spec:
           resources:
             {{- toYaml .Values.jupyter.resources | nindent 12 }}
           env:
-            {{- toYaml .Values.jupyter.env | nindent 12 }}
+            - name: AWS_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ard-workflow-s2.fullname" . }}
+                  key: aws_access_key
+            - name: AWS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ard-workflow-s2.fullname" . }}
+                  key: aws_secret_key
+            {{- if .Values.jupyter.env }}
+            {{- $extraEnvType := typeOf .Values.jupyter.env }}
+            {{- /* If we have a list, embed that here directly. This allows for complex configuration from configmap, downward API, etc. */}}
+            {{- if eq $extraEnvType "[]interface {}" }}
+            {{- .Values.jupyter.env | toYaml | trimSuffix "\n" | nindent 12 }}
+            {{- else if eq $extraEnvType "map[string]interface {}" }}
+            {{- /* If we have a map, treat those as key-value pairs. */}}
+            {{- range $key, $value := .Values.jupyter.env }}
+            - name: {{ $key | quote }}
+              value: {{ $value | quote }}
+            {{- end }}
+            {{- end }}
+            {{- end }}
     {{- with .Values.jupyter.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -42,3 +66,5 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+
+{{- end }}
