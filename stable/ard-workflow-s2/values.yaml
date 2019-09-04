@@ -59,7 +59,7 @@ worker:
     tag: "0.1.0"
     pullPolicy: IfNotPresent
   imagePullSecrets: []
-  replicaCount: 3
+  parallelism: 3
   resources: {}
   env: {}
   nodeSelector: {}
