@@ -5,7 +5,7 @@
 worker:
   image:
     repository: "satapps/ard-workflow-s2"
-    tag: "0.2.0"
+    tag: "0.3.0"
     pullPolicy: IfNotPresent
   imagePullSecrets: []
   parallelism: 3
@@ -19,7 +19,7 @@ jupyter:
   enabled: true
   image:
     repository: "satapps/ard-workflow-s2-jupyter"
-    tag: "0.2.0"
+    tag: "0.3.0"
     pullPolicy: IfNotPresent
   imagePullSecrets: []
   service:
