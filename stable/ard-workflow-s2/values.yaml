@@ -55,7 +55,7 @@ aws:
 
 worker:
   image:
-    repository: "satapps/ard-workflow-s2-jupyter"
+    repository: "satapps/ard-workflow-s2"
     tag: "0.1.0"
     pullPolicy: IfNotPresent
   imagePullSecrets: []
@@ -65,3 +65,20 @@ worker:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+
+jupyter:
+  image:
+    repository: "satapps/ard-workflow-s2-jupyter"
+    tag: "0.1.0"
+    pullPolicy: IfNotPresent
+  imagePullSecrets: []
+  service:
+    type: ClusterIP
+    port: 80
+  replicaCount: 1
+  env:
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
