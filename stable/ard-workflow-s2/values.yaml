@@ -67,6 +67,7 @@ worker:
   affinity: {}
 
 jupyter:
+  enabled: true
   image:
     repository: "satapps/ard-workflow-s2-jupyter"
     tag: "0.1.0"
