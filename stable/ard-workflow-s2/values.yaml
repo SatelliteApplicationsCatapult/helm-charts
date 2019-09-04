@@ -48,3 +48,7 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+aws:
+  aws_access_key: "AKIAIOSFODNN7INVALID"
+  aws_secret_key: "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"
