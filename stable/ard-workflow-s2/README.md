@@ -4,8 +4,7 @@
 
 This chart will deploy the following:
 
-- 1 x Redis master
-- 3 x Sentinel-2 ARD workers that retrieve jobs from the Redis master
+- 3 x Sentinel-2 ARD workers that retrieve jobs from a Redis master
 - 1 x Jupyter Notebook (optional) with port 80 exposed on an external LoadBalancer (default)
 - All using Kubernetes Deployments
 
