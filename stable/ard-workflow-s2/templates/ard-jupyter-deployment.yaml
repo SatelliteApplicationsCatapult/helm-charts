@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "ard-workflow-s2.fullname" . }}
+  labels:
+{{ include "ard-workflow-s2.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.jupyter.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "ard-workflow-s2.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      component: jupyter
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "ard-workflow-s2.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        component: jupyter
+    spec:
+    {{- with .Values.jupyter.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.jupyter.image.repository }}:{{ .Values.jupyter.image.tag }}"
+          imagePullPolicy: {{ .Values.jupyter.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.jupyter.resources | nindent 12 }}
+          env:
+            {{- toYaml .Values.jupyter.env | nindent 12 }}
+    {{- with .Values.jupyter.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.jupyter.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.jupyter.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
