@@ -6,11 +6,6 @@ metadata:
 {{ include "ard-workflow-s2.labels" . | indent 4 }}
 spec:
   parallelism: {{ .Values.worker.parallelism }}
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: {{ include "ard-workflow-s2.name" . }}
-      app.kubernetes.io/instance: {{ .Release.Name }}
-      component: worker
   template:
     metadata:
       labels:
