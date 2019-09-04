@@ -52,3 +52,16 @@ affinity: {}
 aws:
   aws_access_key: "AKIAIOSFODNN7INVALID"
   aws_secret_key: "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"
+
+worker:
+  image:
+    repository: "satapps/ard-workflow-s2-jupyter"
+    tag: "0.1.0"
+    pullPolicy: IfNotPresent
+  imagePullSecrets: []
+  replicaCount: 3
+  env:
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
