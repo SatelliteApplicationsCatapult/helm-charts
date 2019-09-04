@@ -60,8 +60,8 @@ worker:
     pullPolicy: IfNotPresent
   imagePullSecrets: []
   replicaCount: 3
-  env:
   resources: {}
+  env: {}
   nodeSelector: {}
   tolerations: []
   affinity: {}
@@ -76,8 +76,8 @@ jupyter:
     type: ClusterIP
     port: 80
   replicaCount: 1
-  env:
   resources: {}
+  env: {}
   nodeSelector: {}
   tolerations: []
   affinity: {}
