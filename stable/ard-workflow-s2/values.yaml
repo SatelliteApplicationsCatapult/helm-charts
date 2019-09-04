@@ -23,7 +23,7 @@ jupyter:
     pullPolicy: IfNotPresent
   imagePullSecrets: []
   service:
-    type: ClusterIP
+    type: LoadBalancer
     port: 80
   replicaCount: 1
   resources: {}
