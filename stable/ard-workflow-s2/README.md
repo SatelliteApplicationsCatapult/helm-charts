@@ -127,18 +127,17 @@ helm upgrade --install $RELEASEARD stable/ard-workflow-s2 \
   --values ard-values.yaml
 ```
 
-When enabled, for access to the notebook server refer to the instructions provided by the chart once the deployment is initiated.\
-If you need to access this information at a later time, you can issue e.g.:
+When enabled, for access to the notebook server refer to the instructions provided by the chart once the deployment is initiated. If you need to access this information at a later time, you can issue:
 
 ```bash
-helm status my-release
+helm status $RELEASEARD
 ```
 
 ## Cleaning up
 
 :warning: Dangerous Zone :warning:
 
-If you wish to undo changes to your Kubernetes cluster, simply issue the following commands.
+If you wish to undo changes to your Kubernetes cluster, simply issue the following commands:
 
 ```bash
 helm delete $RELEASEREDIS --purge
