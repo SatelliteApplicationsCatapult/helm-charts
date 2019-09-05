@@ -20,6 +20,9 @@ for the differences between ClusterIP, NodePort, and LoadBalancer.
 It's necessary to first create a *ard-values.yaml* file specific to the Kubernetes cluster where the ARD workflow is being deployed. As example:
 
 ```yaml
+worker:
+  parallelism: 5
+
 jupyter:
   enabled: false
 
