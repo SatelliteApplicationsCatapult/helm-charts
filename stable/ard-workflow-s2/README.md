@@ -57,16 +57,18 @@ As example, for a development environment you might have:
 
 ```yaml
 worker:
-  parallelism: 2
+  parallelism: 1
+  env:
+    - name: AWS_NO_SIGN_REQUEST
+      value: "YES"
 
 jupyter:
   enabled: true
   service:
     type: NodePort
-
-aws:
-  aws_access_key: "AKIAIOSFODNN7INVALID"
-  aws_secret_key: "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"
+  env:
+    - name: AWS_NO_SIGN_REQUEST
+      value: "YES"
 ```
 
 For a production environment, you might instead have:
