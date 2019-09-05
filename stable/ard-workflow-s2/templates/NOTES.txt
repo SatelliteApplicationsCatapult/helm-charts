@@ -1,4 +1,4 @@
-Thank you for installing {{ .Chart.Name | upper }}, released at name: {{ .Release.Name }}.
+Thank you for installing {{ .Chart.Name | upper }}, released as: {{ .Release.Name }}.
 
 To learn more about the release, try:
 
