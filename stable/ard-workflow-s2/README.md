@@ -2,9 +2,42 @@
 
 In order to use the deployment material described here you need access to a Kubernetes server or cluster with Helm installed. For development and learning purposes [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/) and [microk8s](https://microk8s.io/) can be used too.
 
-For the full set of configurable options see [values.yaml](values.yaml).
+## Architecture
 
-## Chart Details
+We run a Kubernetes `Job` with multiple parallel worker processes in a given pod.\
+As each pod is created, it picks up one unit of work from a task queue, processes it, and repeats until the end of the queue is reached.\
+We use [Redis](https://redis.io/) as storage service to hold the work queue and store our work items. Each work item represents one scene to be processed through an ARD workflow.
+
+## Redis master server deployment
+
+In order to deploy the master issue the following:
+```bash
+NAMESPACE=ard
+
+RELEASEREDIS=redis
+
+helm upgrade --install $RELEASEREDIS stable/redis \
+  --namespace $NAMESPACE \
+  --version=9.1.3 \
+  --values 04-config-redis.yaml
+```
+
+### Redis job definitions
+
+The list with key `jobS2` is the work queue for Sentinel-2 ARD jobs. Add jobs with e.g.:
+```bash
+$ kubectl run --namespace $NAMESPACE redis-client --rm --tty -i --restart='Never' \
+  --image docker.io/bitnami/redis:5.0.5-debian-9-r104 -- bash
+
+I have no name!@redis-client:/$ redis-cli -h redis-master
+
+redis-master:6379> rpush jobS2 '{"in_scene": "S2A_MSIL2A_20190812T235741_N0213_R030_T56LRR_20190813T014708", "inter_dir": "/data/intermediate/"}'
+(integer) 1
+redis-master:6379> lrange jobS2 0 -1
+1) "{\"in_scene\": \"S2A_MSIL2A_20190812T235741_N0213_R030_T56LRR_20190813T014708\", \"inter_dir\": \"/data/intermediate/\"}"
+```
+
+## ARD Chart Details
 
 This chart will deploy the following:
 
@@ -18,6 +51,8 @@ for the differences between ClusterIP, NodePort, and LoadBalancer.
 ## Installing the Chart
 
 It's necessary to first create a *ard-values.yaml* file specific to the Kubernetes cluster where the ARD workflow is being deployed.\
+For the full set of configurable options see [values.yaml](values.yaml).
+
 As example, for a development environment you might have:
 
 ```yaml
@@ -48,17 +83,32 @@ aws:
   aws_secret_key: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYINVALIDKEY"
 ```
 
-To install the chart with the release name `my-release`:
+To install the chart with the release name `s2job`:
 
 ```bash
-helm install --name my-release stable/ard-workflow-s2 \
+RELEASEARD=s2job
+
+helm upgrade --install $RELEASEARD stable/ard-workflow-s2 \
+  --namespace $NAMESPACE \
   --values ard-values.yaml
 ```
 
-Depending on how your cluster was setup, you may also need to specify a namespace with the following flag: `--namespace my-namespace`.
-
-For access to the notebook server refer to the instructions provided by the chart once the deployment is initiated. If you want to access this information at a later time, you can issue e.g.:
+When enabled, for access to the notebook server refer to the instructions provided by the chart once the deployment is initiated.\
+If you need to access this information at a later time, you can issue e.g.:
 
 ```bash
 helm status my-release
 ```
+
+## Cleaning up
+
+:warning: Dangerous Zone :warning:
+
+If you wish to undo changes to your Kubernetes cluster, simply issue the following commands.
+
+```bash
+helm delete $RELEASEREDIS --purge
+helm delete $RELEASEARD --purge
+kubectl delete namespace $NAMESPACE
+```
+
