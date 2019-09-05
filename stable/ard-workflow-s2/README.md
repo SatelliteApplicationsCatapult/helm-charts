@@ -10,6 +10,38 @@ We use [Redis](https://redis.io/) as storage service to hold the work queue and 
 
 ## Redis master server deployment
 
+It's necessary to first create a *redis-values.yaml* file. As example, for a development environment you might have:
+
+```yaml
+## Cluster settings
+cluster:
+  enabled: false
+
+## Use password authentication
+usePassword: false
+
+##
+## Redis Master parameters
+##
+master:
+  ## Enable persistence using Persistent Volume Claims
+  ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+  ##
+  persistence:
+    enabled: false
+
+## Redis config file
+## ref: https://redis.io/topics/config
+##
+configmap: |-
+  # Enable AOF https://redis.io/topics/persistence#append-only-file
+  appendonly yes
+  # Disable RDB persistence, AOF persistence already enabled.
+  save ""
+```
+
+For the full set of configurable options see [values.yaml](https://github.com/helm/charts/blob/master/stable/redis/values.yaml).
+
 In order to deploy the master issue the following:
 ```bash
 NAMESPACE=ard
@@ -19,7 +51,7 @@ RELEASEREDIS=redis
 helm upgrade --install $RELEASEREDIS stable/redis \
   --namespace $NAMESPACE \
   --version=9.1.3 \
-  --values 04-config-redis.yaml
+  --values redis-values.yaml
 ```
 
 ### Redis job definitions
