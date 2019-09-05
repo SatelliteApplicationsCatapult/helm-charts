@@ -17,7 +17,24 @@ for the differences between ClusterIP, NodePort, and LoadBalancer.
 
 ## Installing the Chart
 
-It's necessary to first create a *ard-values.yaml* file specific to the Kubernetes cluster where the ARD workflow is being deployed. As example:
+It's necessary to first create a *ard-values.yaml* file specific to the Kubernetes cluster where the ARD workflow is being deployed.\
+As example, for a development environment you might have:
+
+```yaml
+worker:
+  parallelism: 2
+
+jupyter:
+  enabled: true
+  service:
+    type: NodePort
+
+aws:
+  aws_access_key: "AKIAIOSFODNN7INVALID"
+  aws_secret_key: "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"
+```
+
+For a production environment, you might instead have:
 
 ```yaml
 worker:
@@ -39,3 +56,9 @@ helm install --name my-release stable/ard-workflow-s2 \
 ```
 
 Depending on how your cluster was setup, you may also need to specify a namespace with the following flag: `--namespace my-namespace`.
+
+For access to the notebook server refer to the instructions provided by the chart once the deployment is initiated. If you want to access this information at a later time, you can issue e.g.:
+
+```bash
+helm status my-release
+```
