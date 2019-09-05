@@ -1,11 +1,11 @@
-# Sentinel-2 ARD Workflow Helm Chart
+# ARD Workflow Helm Chart
 
 In order to use the deployment material described here you need access to a Kubernetes server or cluster with Helm installed. For development and learning purposes [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/) and [microk8s](https://microk8s.io/) can be used too.
 
 ## Architecture
 
-We run a Kubernetes `Job` with multiple parallel worker processes in a given pod.\
-As each pod is created, it picks up one unit of work from a task queue, processes it, and repeats until the end of the queue is reached.\
+We run a Kubernetes `Job` with multiple parallel worker processes in a given pod. As each pod is created, it picks up one unit of work from a task queue, processes it, and repeats until the end of the queue is reached.
+
 We use [Redis](https://redis.io/) as storage service to hold the work queue and store our work items. Each work item represents one scene to be processed through an ARD workflow.
 
 ## Redis master server deployment
