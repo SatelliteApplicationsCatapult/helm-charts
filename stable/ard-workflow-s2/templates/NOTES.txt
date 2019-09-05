@@ -7,9 +7,10 @@ To learn more about the release, try:
 
 This release includes {{ .Values.worker.parallelism }} ARD workers, and {{ .Values.jupyter.replicaCount }} Jupyter servers.  
 
-The Jupyter notebook server exposes external services to
-which you can connect to manage notebooks.
-You can get these addresses by running the following:
+{{ if .Values.jupyter.enabled -}}
+
+The Jupyter notebook server exposes an external service to which you can connect to manage notebooks.
+You can get the relevant address by running the following:
 
 {{- if contains "NodePort" .Values.jupyter.service.type }}
 
@@ -29,9 +30,11 @@ You can get these addresses by running the following:
 
 {{- end }}
 
-  echo http://$JUPYTER_NOTEBOOK_IP:$JUPYTER_NOTEBOOK_PORT       -- Jupyter notebook
+  echo http://$JUPYTER_NOTEBOOK_IP:$JUPYTER_NOTEBOOK_PORT
 
 NOTE: It may take a few minutes for the LoadBalancer IP to be available. Until then, the commands above will not work for the LoadBalancer service type.  
 You can watch the status by running 'kubectl get svc --namespace {{ .Release.Namespace }} -w {{ include "ard-workflow-s2.fullname" . }}-jupyter'
 
 NOTE: The default password to login to the notebook server is `secretpassword`.
+
+{{- end }}
