@@ -25,16 +25,16 @@ spec:
           resources:
             {{- toYaml .Values.worker.resources | nindent 12 }}
           env:
-            - name: AWS_ACCESS_KEY
+            - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
                   name: {{ include "ard-workflow-s2.fullname" . }}
-                  key: aws_access_key
-            - name: AWS_SECRET_KEY
+                  key: aws_access_key_id
+            - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
                   name: {{ include "ard-workflow-s2.fullname" . }}
-                  key: aws_secret_key
+                  key: aws_secret_access_key
             {{- if .Values.worker.env }}
             {{- $extraEnvType := typeOf .Values.worker.env }}
             {{- /* If we have a list, embed that here directly. This allows for complex configuration from configmap, downward API, etc. */}}

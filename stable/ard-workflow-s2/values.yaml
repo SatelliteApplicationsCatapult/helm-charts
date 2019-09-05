@@ -5,7 +5,7 @@
 worker:
   image:
     repository: "satapps/ard-workflow-s2"
-    tag: "0.3.0"
+    tag: "0.4.0"
     pullPolicy: IfNotPresent
   imagePullSecrets: []
   parallelism: 3
@@ -19,7 +19,7 @@ jupyter:
   enabled: true
   image:
     repository: "satapps/ard-workflow-s2-jupyter"
-    tag: "0.3.0"
+    tag: "0.4.0"
     pullPolicy: IfNotPresent
   imagePullSecrets: []
   service:
@@ -33,6 +33,6 @@ jupyter:
   affinity: {}
 
 aws:
-  aws_access_key: "AKIAIOSFODNN7INVALID"
-  aws_secret_key: "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"
+  aws_access_key_id: "AKIAIOSFODNN7INVALID"
+  aws_secret_access_key: "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"
 

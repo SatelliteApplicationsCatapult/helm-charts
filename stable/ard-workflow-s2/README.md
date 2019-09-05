@@ -113,8 +113,8 @@ jupyter:
   enabled: false
 
 aws:
-  aws_access_key: "AKIAIOSFODNN7INVALID"
-  aws_secret_key: "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"
+  aws_access_key_id: "AKIAIOSFODNN7INVALID"
+  aws_secret_access_key: "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"
 ```
 
 To install the chart with the release name `s2job`:
