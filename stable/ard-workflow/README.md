@@ -144,7 +144,7 @@ helm status $RELEASEARD
 A `Job` can be inspected for completion, e.g. by issuing:
 
 ```bash
-$ kubectl get job -n ard -o wide
+$ kubectl get job -n $NAMESPACE -o wide
 NAME                        COMPLETIONS   DURATION   AGE   CONTAINERS     IMAGES                          SELECTOR
 s2job-ard-workflow-worker   3/1 of 3      100m       28h   ard-workflow   satapps/ard-workflow-s2:0.5.0   controller-uid=302c9874-0e24-4977-9360-bc8cfc76df96
 ```
