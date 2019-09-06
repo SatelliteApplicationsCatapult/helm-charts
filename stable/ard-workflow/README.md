@@ -79,7 +79,7 @@ redis-master:6379> lrange jobS2 0 -1
 
 ## ARD Chart Details
 
-By default, this chart will deploy the following:
+By default, this Chart will deploy the following:
 
 - 3 x Sentinel-2 ARD workers that retrieve jobs from a Redis master
 - 1 x Jupyter Notebook (optional) with port 80 exposed on an external LoadBalancer (default)
@@ -125,7 +125,7 @@ aws:
   aws_secret_access_key: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYINVALIDKEY"
 ```
 
-To install the chart with the release name `s2job`:
+To install the Chart with the release name `s2job`:
 
 ```bash
 RELEASEARD=s2job
@@ -135,7 +135,7 @@ helm upgrade --install $RELEASEARD stable/ard-workflow-s2 \
   --values ard-values.yaml
 ```
 
-If enabled, for access to the notebook server refer to the instructions provided by the chart once the deployment is initiated. If you need to access this information at a later time, you can issue:
+If enabled, for access to the notebook server refer to the instructions provided by the Chart once the deployment is initiated. If you need to access this information at a later time, you can issue:
 
 ```bash
 helm status $RELEASEARD
