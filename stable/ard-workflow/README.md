@@ -16,7 +16,7 @@ We provide resilience against `Pod` termination, which is expected when running 
 
 ## Redis Master server deployment
 
-It's necessary to first create a *redis-values.yaml* file. As example, for a development environment you might have:
+It's necessary to first create a *values-redis.yaml* file. As example, for a development environment you might have:
 
 ```yaml
 ## Cluster settings
@@ -58,7 +58,7 @@ RELEASEREDIS=redis
 helm upgrade --install $RELEASEREDIS stable/redis \
   --namespace $NAMESPACE \
   --version=9.1.3 \
-  --values redis-values.yaml
+  --values values-redis.yaml
 ```
 
 ### Redis job definitions
@@ -90,7 +90,7 @@ for the differences between ClusterIP, NodePort, and LoadBalancer.
 
 ### Installing the Chart
 
-It's necessary to first create a *ard-values.yaml* file specific to the Kubernetes cluster and the ARD workflow that is being deployed.\
+It's necessary to first create a *values-ard.yaml* file specific to the Kubernetes cluster and the ARD workflow that is being deployed.\
 For the full set of configurable options see [values.yaml](values.yaml).
 
 As example, for a development environment you might have:
@@ -132,7 +132,7 @@ RELEASEARD=s2job
 
 helm upgrade --install $RELEASEARD stable/ard-workflow-s2 \
   --namespace $NAMESPACE \
-  --values ard-values.yaml
+  --values values-ard.yaml
 ```
 
 If enabled, for access to the notebook server refer to the instructions provided by the Chart once the deployment is initiated. If you need to access this information at a later time, you can issue:
