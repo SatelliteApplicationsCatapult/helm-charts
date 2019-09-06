@@ -141,6 +141,48 @@ If enabled, for access to the notebook server refer to the instructions provided
 helm status $RELEASEARD
 ```
 
+## Default Configuration
+
+The following tables list the configurable parameters of the Chart and their default values.
+
+### Worker
+
+| Parameter                 | Description                     | Default                   |
+| --------------------------| --------------------------------| --------------------------|
+| `worker.image.repository` | Container image name            | `satapps/ard-workflow-s2` |
+| `worker.image.tag`        | Container image tag             | `0.5.0`                   |
+| `worker.image.pullPolicy` | Container image pull policy     | `IfNotPresent`            |
+| `worker.parallelism`      | k8s parallelism                 | `3`                       |
+| `worker.resources`        | Container resources             | `{}`                      |
+| `worker.env`              | Container environment variables | `{}`                      |
+| `worker.tolerations`      | Tolerations                     | `[]`                      |
+| `worker.nodeSelector`     | nodeSelector                    | `{}`                      |
+| `worker.affinity`         | Container affinity              | `{}`                      |
+
+### Jupyter
+
+| Parameter                  | Description                     | Default                           |
+|----------------------------|---------------------------------|-----------------------------------|
+| `jupyter.enabled`          | Include optional Jupyter server | `true`                            |
+| `jupyter.image.repository` | Container image name            | `satapps/ard-workflow-s2-jupyter` |
+| `jupyter.image.tag`        | Container image tag             | `0.5.0`                           |
+| `jupyter.image.pullPolicy` | Container image pull policy     | `IfNotPresent`                    |
+| `jupyter.service.type`     | k8s service type                | `LoadBalancer`                    |
+| `jupyter.service.port`     | k8s service port                | `80`                              |
+| `jupyter.replicaCount`     | k8s deployment replicas         | `1`                               |
+| `jupyter.resources`        | Container resources             | `{}`                              |
+| `jupyter.env`              | Container environment variables | `{}`                              |
+| `jupyter.tolerations`      | Tolerations                     | `[]`                              |
+| `jupyter.nodeSelector`     | nodeSelector                    | `{}`                              |
+| `jupyter.affinity`         | Container affinity              | `{}`                              |
+
+### AWS
+
+| Parameter               | Description    | Default                                    |
+|-------------------------|----------------|--------------------------------------------|
+| `aws_access_key_id`     | AWS key id     | `AKIAIOSFODNN7INVALID`                     |
+| `aws_secret_access_key` | AWS secret key | `wJalrXUtnFEMI/K7MDENG/bPxRfiCYINVALIDKEY` |
+
 ### Job completion
 
 A `Job` can be inspected for completion, e.g. by issuing:
