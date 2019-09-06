@@ -141,7 +141,7 @@ helm status $RELEASEARD
 
 ### Job completion
 
-A Job can be inspected for completion, e.g. by issuing:
+A `Job` can be inspected for completion, e.g. by issuing:
 
 ```bash
 $ kubectl get job -n ard -o wide
