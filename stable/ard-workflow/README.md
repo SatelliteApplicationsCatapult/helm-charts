@@ -8,9 +8,11 @@ The solution provided here is suitable to run ARD workflows for historical data 
 
 ## Architecture
 
-We run a Kubernetes `Job` with multiple parallel worker processes. As each pod is created, it picks up one unit of work from a task queue, processes it, and repeats until the end of the queue is reached.
+We run a Kubernetes `Job` with multiple parallel worker `Pod`s. As each `Pod` is created, it picks up one unit of work from a task queue, processes it, and repeats until the end of the queue is reached.
 
 We use [Redis](https://redis.io/) as storage service to hold the work queue and store our work items. Each work item represents one scene to be processed through an ARD workflow. In practice you would set up Redis once and reuse it for the work queues of many jobs.
+
+Resilience against `Pod` termination, which is expected when running workers using `Spot` instances for Amazon `EKS`, is achieved through a lease mechanism: If a worker picks up a unit of work from a task queue but doesn't complete it within the lease time defined for its class, other workers may consider such worker to have crashed or stalled and pick up the item instead. It is therefore recommended to run at least a subset of worker nodes using `On-Demand` instances, so that these can ensure some minimal processing capability to meet deadlines.
 
 ## Redis Master server deployment
 
