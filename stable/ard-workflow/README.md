@@ -2,11 +2,15 @@
 
 In order to use the deployment material described here you need access to a Kubernetes server or cluster with Helm installed. For development and learning purposes [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/) and [microk8s](https://microk8s.io/) can be used too.
 
+## Scope
+
+The solution provided here is suitable to run ARD workflows for historical data on a massive scale.
+
 ## Architecture
 
-We run a Kubernetes `Job` with multiple parallel worker processes in a given pod. As each pod is created, it picks up one unit of work from a task queue, processes it, and repeats until the end of the queue is reached.
+We run a Kubernetes `Job` with multiple parallel worker processes. As each pod is created, it picks up one unit of work from a task queue, processes it, and repeats until the end of the queue is reached.
 
-We use [Redis](https://redis.io/) as storage service to hold the work queue and store our work items. Each work item represents one scene to be processed through an ARD workflow.
+We use [Redis](https://redis.io/) as storage service to hold the work queue and store our work items. Each work item represents one scene to be processed through an ARD workflow. In practice you would set up Redis once and reuse it for the work queues of many jobs.
 
 ## Redis Master server deployment
 
@@ -133,6 +137,26 @@ If enabled, for access to the notebook server refer to the instructions provided
 
 ```bash
 helm status $RELEASEARD
+```
+
+## Job completion
+
+A Job can be inspected for completion, e.g. by issuing:
+
+```bash
+$ kubectl get job -n ard -o wide
+NAME                        COMPLETIONS   DURATION   AGE   CONTAINERS     IMAGES                          SELECTOR
+s2job-ard-workflow-worker   3/1 of 3      100m       28h   ard-workflow   satapps/ard-workflow-s2:0.5.0   controller-uid=302c9874-0e24-4977-9360-bc8cfc76df96
+```
+
+Alternatively, making sure that the relevant `Pod`s are in the `Completed` status is another possible route. E.g.:
+
+```bash
+$ kubectl get pod -n $NAMESPACE --field-selector spec.restartPolicy=OnFailure -o wide
+NAME                              READY   STATUS      RESTARTS   AGE   IP             NODE        NOMINATED NODE   READINESS GATES
+s2job-ard-workflow-worker-fsd27   0/1     Completed   0          28h   10.244.2.129   k8snode02   <none>           <none>
+s2job-ard-workflow-worker-gltrk   0/1     Completed   0          28h   10.244.3.114   k8snode03   <none>           <none>
+s2job-ard-workflow-worker-jnsfl   0/1     Completed   0          28h   10.244.1.98    k8snode01   <none>           <none>
 ```
 
 ## Cleaning up
