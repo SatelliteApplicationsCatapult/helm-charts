@@ -8,7 +8,7 @@ We run a Kubernetes `Job` with multiple parallel worker processes in a given pod
 
 We use [Redis](https://redis.io/) as storage service to hold the work queue and store our work items. Each work item represents one scene to be processed through an ARD workflow.
 
-## Redis master server deployment
+## Redis Master server deployment
 
 It's necessary to first create a *redis-values.yaml* file. As example, for a development environment you might have:
 
@@ -43,6 +43,7 @@ configmap: |-
 For the full set of configurable options see [values.yaml](https://github.com/helm/charts/blob/master/stable/redis/values.yaml).
 
 In order to deploy the master issue the following:
+
 ```bash
 NAMESPACE=ard
 
@@ -57,6 +58,7 @@ helm upgrade --install $RELEASEREDIS stable/redis \
 ### Redis job definitions
 
 The list with key `jobS2` is the work queue for Sentinel-2 ARD jobs. Add jobs with e.g.:
+
 ```bash
 $ kubectl run --namespace $NAMESPACE redis-client --rm --tty -i --restart='Never' \
   --image docker.io/bitnami/redis:5.0.5-debian-9-r104 -- bash
@@ -71,7 +73,7 @@ redis-master:6379> lrange jobS2 0 -1
 
 ## ARD Chart Details
 
-This chart will deploy the following:
+By default, this chart will deploy the following:
 
 - 3 x Sentinel-2 ARD workers that retrieve jobs from a Redis master
 - 1 x Jupyter Notebook (optional) with port 80 exposed on an external LoadBalancer (default)
@@ -82,7 +84,7 @@ for the differences between ClusterIP, NodePort, and LoadBalancer.
 
 ## Installing the Chart
 
-It's necessary to first create a *ard-values.yaml* file specific to the Kubernetes cluster where the ARD workflow is being deployed.\
+It's necessary to first create a *ard-values.yaml* file specific to the Kubernetes cluster and the ARD workflow that is being deployed.\
 For the full set of configurable options see [values.yaml](values.yaml).
 
 As example, for a development environment you might have:
@@ -127,7 +129,7 @@ helm upgrade --install $RELEASEARD stable/ard-workflow-s2 \
   --values ard-values.yaml
 ```
 
-When enabled, for access to the notebook server refer to the instructions provided by the chart once the deployment is initiated. If you need to access this information at a later time, you can issue:
+If enabled, for access to the notebook server refer to the instructions provided by the chart once the deployment is initiated. If you need to access this information at a later time, you can issue:
 
 ```bash
 helm status $RELEASEARD
