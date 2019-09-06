@@ -15,25 +15,25 @@ You can get the relevant address by running the following:
 {{- if contains "NodePort" .Values.jupyter.service.type }}
 
   export JUPYTER_NOTEBOOK_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath='{.items[0].status.addresses[0].address}')
-  export JUPYTER_NOTEBOOK_PORT=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "ard-workflow-s2.fullname" . }}-jupyter -o jsonpath='{.spec.ports[0].nodePort}')
+  export JUPYTER_NOTEBOOK_PORT=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "ard-workflow.fullname" . }}-jupyter -o jsonpath='{.spec.ports[0].nodePort}')
 
 {{- else if contains "LoadBalancer" .Values.jupyter.service.type }}
 
-  export JUPYTER_NOTEBOOK_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "ard-workflow-s2.fullname" . }}-jupyter -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+  export JUPYTER_NOTEBOOK_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "ard-workflow.fullname" . }}-jupyter -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
   export JUPYTER_NOTEBOOK_PORT={{ .Values.jupyter.service.port }}
 
 {{- else if contains "ClusterIP"  .Values.jupyter.service.type }}
 
   export JUPYTER_NOTEBOOK_IP="127.0.0.1"
   export JUPYTER_NOTEBOOK_PORT=8082
-  kubectl port-forward --namespace {{ .Release.Namespace }} svc/{{ include "ard-workflow-s2.fullname" . }}-jupyter $JUPYTER_NOTEBOOK_PORT:{{ .Values.jupyter.service.port }} &
+  kubectl port-forward --namespace {{ .Release.Namespace }} svc/{{ include "ard-workflow.fullname" . }}-jupyter $JUPYTER_NOTEBOOK_PORT:{{ .Values.jupyter.service.port }} &
 
 {{- end }}
 
   echo http://$JUPYTER_NOTEBOOK_IP:$JUPYTER_NOTEBOOK_PORT
 
 NOTE: It may take a few minutes for the LoadBalancer IP to be available. Until then, the commands above will not work for the LoadBalancer service type.  
-You can watch the status by running 'kubectl get svc --namespace {{ .Release.Namespace }} -w {{ include "ard-workflow-s2.fullname" . }}-jupyter'
+You can watch the status by running 'kubectl get svc --namespace {{ .Release.Namespace }} -w {{ include "ard-workflow.fullname" . }}-jupyter'
 
 NOTE: The default password to login to the notebook server is `secretpassword`.
 
