@@ -86,7 +86,7 @@ By default, this chart will deploy the following:
 > **Tip**: See the [Kubernetes Service Type Docs](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types)
 for the differences between ClusterIP, NodePort, and LoadBalancer.
 
-## Installing the Chart
+### Installing the Chart
 
 It's necessary to first create a *ard-values.yaml* file specific to the Kubernetes cluster and the ARD workflow that is being deployed.\
 For the full set of configurable options see [values.yaml](values.yaml).
@@ -139,7 +139,7 @@ If enabled, for access to the notebook server refer to the instructions provided
 helm status $RELEASEARD
 ```
 
-## Job completion
+### Job completion
 
 A Job can be inspected for completion, e.g. by issuing:
 
