@@ -12,8 +12,6 @@ We run a Kubernetes `Job` with multiple parallel worker `Pod`s. As each `Pod` is
 
 We use [Redis](https://redis.io/) as storage service to hold the work queue and store our work items. Each work item represents one scene to be processed through an ARD workflow. In practice we would set up Redis once and reuse it for the work queues of multiple job types.
 
-We provide resilience against `Pod` termination, which is expected when running workers using AWS `Spot` instances with `EKS`, by means of a lease mechanism. If a worker picks up a unit of work from a task queue but doesn't complete it within the lease time defined for its class, other workers may consider such worker to have crashed or stalled and pick up the item instead. It is therefore recommended to run at least a subset of worker nodes using AWS `On-Demand` instances, so that these can ensure adequate processing capability to meet deadlines at times when `Spot` instances become unavailable.
-
 ## Redis Master server deployment
 
 It's necessary to first create a *values-redis.yaml* file. As example, for a development environment we might have:
