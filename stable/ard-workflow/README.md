@@ -63,7 +63,7 @@ helm upgrade --install $RELEASEREDIS stable/redis \
 
 ### Redis job definitions
 
-The list with key `jobS2` is the work queue for Sentinel-2 ARD jobs. Add jobs with e.g.:
+The list with key `jobS2` is the work queue for Sentinel-2 ARD work items. Add items with e.g.:
 
 ```bash
 $ kubectl run --namespace $NAMESPACE redis-client --rm --tty -i --restart='Never' \
