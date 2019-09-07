@@ -152,7 +152,7 @@ The following tables list the configurable parameters of the Chart and their def
 | `worker.image.repository` | Container image name            | `satapps/ard-workflow-s2` |
 | `worker.image.tag`        | Container image tag             | `0.5.0`                   |
 | `worker.image.pullPolicy` | Container image pull policy     | `IfNotPresent`            |
-| `worker.parallelism`      | k8s parallelism                 | `3`                       |
+| `worker.parallelism`      | k8s job parallelism             | `3`                       |
 | `worker.resources`        | Container resources             | `{}`                      |
 | `worker.env`              | Container environment variables | `{}`                      |
 | `worker.tolerations`      | Tolerations                     | `[]`                      |
