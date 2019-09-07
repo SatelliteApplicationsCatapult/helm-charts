@@ -130,7 +130,7 @@ To install the Chart with the release name `s2job`:
 ```bash
 RELEASEARD=s2job
 
-helm upgrade --install $RELEASEARD stable/ard-workflow-s2 \
+helm upgrade --install $RELEASEARD stable/ard-workflow \
   --namespace $NAMESPACE \
   --values values-ard.yaml
 ```
