@@ -75,10 +75,13 @@ redis-master:6379> lrange jobS2 0 -1
 1) "{\"in_scene\": \"S2A_MSIL2A_20190812T235741_N0213_R030_T56LRR_20190813T014708\", \"inter_dir\": \"/data/intermediate/\"}"
 ```
 
-For [mass insertion](https://redis.io/topics/mass-insert):
+For [mass insertion](https://redis.io/topics/mass-insert) you can use e.g.:
 
 ```bash
-cat <<EOF | redis-cli -h redis-master --pipe
+$ kubectl run --namespace $NAMESPACE redis-client --rm --tty -i --restart='Never' \
+  --image docker.io/bitnami/redis:5.0.5-debian-9-r104 -- bash
+
+I have no name!@redis-client:/$ cat <<EOF | redis-cli -h redis-master --pipe
 rpush jobS2 '{"in_scene": "S2A_MSIL2A_20190812T235741_N0213_R030_T56LRR_20190813T014708", "inter_dir": "/data/intermediate/"}'
 ...
 EOF
