@@ -61,7 +61,7 @@ helm upgrade --install $RELEASEREDIS stable/redis \
 
 ### Redis job definitions
 
-The list with key `jobS2` is the work queue for Sentinel-2 ARD work items. Add items with e.g.:
+The list with key `jobS2` is the work queue for Sentinel-2 ARD work items. Insert items with e.g.:
 
 ```bash
 $ kubectl run --namespace $NAMESPACE redis-client --rm --tty -i --restart='Never' \
@@ -73,6 +73,15 @@ redis-master:6379> rpush jobS2 '{"in_scene": "S2A_MSIL2A_20190812T235741_N0213_R
 (integer) 1
 redis-master:6379> lrange jobS2 0 -1
 1) "{\"in_scene\": \"S2A_MSIL2A_20190812T235741_N0213_R030_T56LRR_20190813T014708\", \"inter_dir\": \"/data/intermediate/\"}"
+```
+
+For [mass insertion](https://redis.io/topics/mass-insert):
+
+```bash
+cat <<EOF | redis-cli -h redis-master --pipe
+rpush jobS2 '{"in_scene": "S2A_MSIL2A_20190812T235741_N0213_R030_T56LRR_20190813T014708", "inter_dir": "/data/intermediate/"}'
+...
+EOF
 ```
 
 ## ARD Chart Details
