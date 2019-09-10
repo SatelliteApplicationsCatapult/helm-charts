@@ -5,7 +5,7 @@ To learn more about the release, try:
   $ helm status {{ .Release.Name }}  # information about running pods and this message
   $ helm get {{ .Release.Name }}     # get full Kubernetes specification
 
-This release includes {{ .Values.worker.parallelism }} ARD workers, and {{ .Values.jupyter.replicaCount }} Jupyter servers.  
+This release includes {{ .Values.worker.parallelism }} ARD workers{{ if .Values.jupyter.enabled -}}, and {{ .Values.jupyter.replicaCount }} Jupyter servers{{- end }}.
 
 {{ if .Values.jupyter.enabled -}}
 
