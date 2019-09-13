@@ -3,9 +3,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "ard-workflow.fullname" . }}-jupyter
+  name: {{ include "ard-campaign.fullname" . }}-jupyter
   labels:
-{{ include "ard-workflow.labels" . | indent 4 }}
+{{ include "ard-campaign.labels" . | indent 4 }}
 spec:
   type: {{ .Values.jupyter.service.type }}
   ports:
@@ -14,7 +14,7 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app.kubernetes.io/name: {{ include "ard-workflow.name" . }}
+    app.kubernetes.io/name: {{ include "ard-campaign.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
 
 {{- end }}

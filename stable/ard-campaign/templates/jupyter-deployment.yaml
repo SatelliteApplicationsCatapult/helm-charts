@@ -3,20 +3,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "ard-workflow.fullname" . }}-jupyter
+  name: {{ include "ard-campaign.fullname" . }}-jupyter
   labels:
-{{ include "ard-workflow.labels" . | indent 4 }}
+{{ include "ard-campaign.labels" . | indent 4 }}
 spec:
   replicas: {{ .Values.jupyter.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "ard-workflow.name" . }}
+      app.kubernetes.io/name: {{ include "ard-campaign.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
       component: jupyter
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "ard-workflow.name" . }}
+        app.kubernetes.io/name: {{ include "ard-campaign.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
         component: jupyter
     spec:
@@ -34,12 +34,12 @@ spec:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "ard-workflow.fullname" . }}
+                  name: {{ include "ard-campaign.fullname" . }}
                   key: aws_access_key_id
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "ard-workflow.fullname" . }}
+                  name: {{ include "ard-campaign.fullname" . }}
                   key: aws_secret_access_key
             {{- if .Values.jupyter.env }}
             {{- $extraEnvType := typeOf .Values.jupyter.env }}

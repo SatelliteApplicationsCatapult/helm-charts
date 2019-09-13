@@ -1,15 +1,15 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "ard-workflow.fullname" . }}-worker
+  name: {{ include "ard-campaign.fullname" . }}-worker
   labels:
-{{ include "ard-workflow.labels" . | indent 4 }}
+{{ include "ard-campaign.labels" . | indent 4 }}
 spec:
   parallelism: {{ .Values.worker.parallelism }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "ard-workflow.name" . }}
+        app.kubernetes.io/name: {{ include "ard-campaign.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
         component: worker
     spec:
@@ -28,12 +28,12 @@ spec:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "ard-workflow.fullname" . }}
+                  name: {{ include "ard-campaign.fullname" . }}
                   key: aws_access_key_id
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "ard-workflow.fullname" . }}
+                  name: {{ include "ard-campaign.fullname" . }}
                   key: aws_secret_access_key
             {{- if .Values.worker.env }}
             {{- $extraEnvType := typeOf .Values.worker.env }}

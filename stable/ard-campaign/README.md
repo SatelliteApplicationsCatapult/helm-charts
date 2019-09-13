@@ -140,7 +140,7 @@ To install the Chart with the release name `s2job`:
 ```bash
 RELEASEARD=s2job
 
-helm upgrade --install $RELEASEARD stable/ard-workflow \
+helm upgrade --install $RELEASEARD stable/ard-campaign \
   --namespace $NAMESPACE \
   --values values-ard.yaml
 ```
@@ -200,7 +200,7 @@ A `Job` can be inspected for completion, e.g. by issuing:
 ```bash
 $ kubectl get job -n $NAMESPACE -o wide
 NAME                        COMPLETIONS   DURATION   AGE   CONTAINERS     IMAGES                          SELECTOR
-s2job-ard-workflow-worker   3/1 of 3      100m       28h   ard-workflow   satapps/ard-workflow-s2:0.5.0   controller-uid=302c9874-0e24-4977-9360-bc8cfc76df96
+s2job-ard-campaign-worker   3/1 of 3      100m       28h   ard-campaign   satapps/ard-workflow-s2:0.5.0   controller-uid=302c9874-0e24-4977-9360-bc8cfc76df96
 ```
 
 Alternatively, making sure that the relevant `Pod`s are in the `Completed` status is another possible route. E.g.:
@@ -208,9 +208,9 @@ Alternatively, making sure that the relevant `Pod`s are in the `Completed` statu
 ```bash
 $ kubectl get pod -n $NAMESPACE --field-selector spec.restartPolicy=OnFailure -o wide
 NAME                              READY   STATUS      RESTARTS   AGE   IP             NODE        NOMINATED NODE   READINESS GATES
-s2job-ard-workflow-worker-fsd27   0/1     Completed   0          28h   10.244.2.129   k8snode02   <none>           <none>
-s2job-ard-workflow-worker-gltrk   0/1     Completed   0          28h   10.244.3.114   k8snode03   <none>           <none>
-s2job-ard-workflow-worker-jnsfl   0/1     Completed   0          28h   10.244.1.98    k8snode01   <none>           <none>
+s2job-ard-campaign-worker-fsd27   0/1     Completed   0          28h   10.244.2.129   k8snode02   <none>           <none>
+s2job-ard-campaign-worker-gltrk   0/1     Completed   0          28h   10.244.3.114   k8snode03   <none>           <none>
+s2job-ard-campaign-worker-jnsfl   0/1     Completed   0          28h   10.244.1.98    k8snode01   <none>           <none>
 ```
 
 ## Cleaning up
