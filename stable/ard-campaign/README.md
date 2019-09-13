@@ -1,10 +1,10 @@
-# ARD Workflow Helm Chart
+# ARD Processing Campaign Helm Chart
 
 In order to use the deployment material described here you need access to a Kubernetes server or cluster with Helm installed. For development and learning purposes [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/) and [microk8s](https://microk8s.io/) can be used too.
 
 ## Scope
 
-The solution provided here is suitable to run ARD workflows for historical data on a massive scale.
+The solution provided here is suitable to run ARD processing campaigns for historical data on a massive scale.
 
 ## Architecture
 
