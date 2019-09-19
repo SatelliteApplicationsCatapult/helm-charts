@@ -218,7 +218,7 @@ s2job-ard-campaign-worker-jnsfl   0/1     Completed   0          28h   10.244.1.
 In order to extract the logs from all workers, issue:
 
 ```bash
-for pod in $(kubectl get pods -n ard -l component=worker -o name); do kubectl logs $pod -n ard; done
+for pod in $(kubectl get pods -n $NAMESPACE -l component=worker -o name); do kubectl logs $pod -n $NAMESPACE; done
 ```
 
 ## Cleaning up
