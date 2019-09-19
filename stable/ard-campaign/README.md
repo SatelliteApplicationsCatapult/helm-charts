@@ -213,6 +213,14 @@ s2job-ard-campaign-worker-gltrk   0/1     Completed   0          28h   10.244.3.
 s2job-ard-campaign-worker-jnsfl   0/1     Completed   0          28h   10.244.1.98    k8snode01   <none>           <none>
 ```
 
+### Logging
+
+In order to extract the logs from all workers, issue:
+
+```bash
+for pod in $(kubectl get pods -n ard -l component=worker -o name); do kubectl logs $pod -n ard; done
+```
+
 ## Cleaning up
 
 :warning: Dangerous Zone :warning:
