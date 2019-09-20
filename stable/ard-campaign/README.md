@@ -100,7 +100,14 @@ for the differences between ClusterIP, NodePort, and LoadBalancer.
 
 ### Installing the Chart
 
-It's necessary to first create a *values-ard.yaml* file specific to the Kubernetes cluster and the ARD workflow that is being deployed.\
+Make Helm aware of the [Satellite Applications Catapult Helm chart repository](https://satelliteapplicationscatapult.github.io/helm-charts/), so you will be able to install the ARD chart from it without having to use a long URL name:
+
+```bash
+helm repo add satapps https://satelliteapplicationscatapult.github.io/helm-charts
+helm repo update
+```
+
+It's then necessary to create a *values-ard.yaml* file specific to the Kubernetes cluster and the ARD workflow that is being deployed.\
 For the full set of configurable options see [values.yaml](values.yaml).
 
 As example, for a development environment we might have:
@@ -140,7 +147,7 @@ To install the Chart with the release name `s2job`:
 ```bash
 RELEASEARD=s2job
 
-helm upgrade --install $RELEASEARD stable/ard-campaign \
+helm upgrade --install $RELEASEARD satapps/ard-campaign \
   --namespace $NAMESPACE \
   --values values-ard.yaml
 ```
