@@ -133,6 +133,27 @@ For a production environment, we might have instead:
 ```yaml
 worker:
   parallelism: 5
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: component
+            operator: In
+            values:
+            - worker
+        topologyKey: "kubernetes.io/hostname"
+#    podAntiAffinity:
+#      preferredDuringSchedulingIgnoredDuringExecution:
+#      - weight: 1
+#        podAffinityTerm:
+#          labelSelector:
+#            matchExpressions:
+#            - key: component
+#              operator: In
+#              values:
+#              - worker
+#          topologyKey: "kubernetes.io/hostname"
 
 jupyter:
   enabled: false
@@ -242,4 +263,3 @@ kubectl delete namespace $NAMESPACE
 
 ## TODO
 - In order to automatically add work items to a processing queue we could use the `redis-client` Docker image and inject such work items by means of a `ConfigMap`. The command executed by the image upon starting would then be something like: `cat /data/work-items.list | redis-cli -h redis-master --pipe`. One would have to make sure that the Redis Master server deployment is active before attempting to add work items.
-- Add scheduling configuration for node selection/affinity/anti-affinity.
