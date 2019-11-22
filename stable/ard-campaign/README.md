@@ -242,3 +242,4 @@ kubectl delete namespace $NAMESPACE
 
 ## TODO
 - In order to automatically add work items to a processing queue we could use the `redis-client` Docker image and inject such work items by means of a `ConfigMap`. The command executed by the image upon starting would then be something like: `cat /data/work-items.list | redis-cli -h redis-master --pipe`. One would have to make sure that the Redis Master server deployment is active before attempting to add work items.
+- Add scheduling configuration for node selection/affinity/anti-affinity.
