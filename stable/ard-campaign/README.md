@@ -134,26 +134,26 @@ For a production environment, we might have instead:
 worker:
   parallelism: 5
   affinity:
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-      - labelSelector:
-          matchExpressions:
-          - key: component
-            operator: In
-            values:
-            - worker
-        topologyKey: "kubernetes.io/hostname"
 #    podAntiAffinity:
-#      preferredDuringSchedulingIgnoredDuringExecution:
-#      - weight: 1
-#        podAffinityTerm:
-#          labelSelector:
-#            matchExpressions:
-#            - key: component
-#              operator: In
-#              values:
-#              - worker
-#          topologyKey: "kubernetes.io/hostname"
+#      requiredDuringSchedulingIgnoredDuringExecution:
+#      - labelSelector:
+#          matchExpressions:
+#          - key: component
+#            operator: In
+#            values:
+#            - worker
+#        topologyKey: "kubernetes.io/hostname"
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: component
+              operator: In
+              values:
+              - worker
+          topologyKey: "kubernetes.io/hostname"
 
 jupyter:
   enabled: false
