@@ -234,7 +234,7 @@ s2job-ard-campaign-worker   3/1 of 3      100m       28h   ard-campaign   satapp
 Alternatively, making sure that the relevant `Pod`s are in the `Completed` status is another possible route. E.g.:
 
 ```bash
-$ kubectl get pod -n $NAMESPACE --field-selector spec.restartPolicy=OnFailure -o wide
+$ kubectl get pod -n $NAMESPACE -l component=worker -o wide
 NAME                              READY   STATUS      RESTARTS   AGE   IP             NODE        NOMINATED NODE   READINESS GATES
 s2job-ard-campaign-worker-fsd27   0/1     Completed   0          28h   10.244.2.129   k8snode02   <none>           <none>
 s2job-ard-campaign-worker-gltrk   0/1     Completed   0          28h   10.244.3.114   k8snode03   <none>           <none>
