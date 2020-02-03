@@ -133,6 +133,9 @@ For a production environment, we might have instead:
 ```yaml
 worker:
   parallelism: 5
+  env:
+    - name: LOGLEVEL
+      value: "ERROR"
   affinity:
 #    podAntiAffinity:
 #      requiredDuringSchedulingIgnoredDuringExecution:
