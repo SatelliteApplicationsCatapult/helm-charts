@@ -383,10 +383,6 @@ worker:
   env:
     - name: LOGLEVEL
       value: "ERROR"
-    - name: AWS_VIRTUAL_HOSTING
-      value: "FALSE"
-    - name: AWS_S3_ENDPOINT
-      value: "s3-uk-1.sa-catapult.co.uk"
   affinity:
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
