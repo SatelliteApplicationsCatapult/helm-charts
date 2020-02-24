@@ -87,6 +87,8 @@ rpush jobS2 '{"in_scene": "S2A_MSIL2A_20190812T235741_N0213_R030_T56LRR_20190813
 EOF
 ```
 
+For other missions and products see the [relevant section](https://github.com/SatelliteApplicationsCatapult/helm-charts/tree/master/stable/ard-campaign#other-missions-and-products).
+
 ## ARD Chart Details
 
 By default, this Chart will deploy the following:
@@ -132,7 +134,7 @@ For a production environment, we might have instead:
 
 ```yaml
 worker:
-  parallelism: 5
+  parallelism: 14
   env:
     - name: LOGLEVEL
       value: "ERROR"
@@ -250,6 +252,150 @@ In order to extract the logs from all workers, issue:
 
 ```bash
 for pod in $(kubectl get pods -n $NAMESPACE -l component=worker -o name); do kubectl logs $pod -n $NAMESPACE; done
+```
+
+## Other missions and products
+
+### Landsat
+
+For Landsat 4, 5, 7, and 8, jobs are defined as per example below:
+
+```bash
+rpush jobLS '{"in_scene": "https://edclpdsftp.cr.usgs.gov/orders/espa-User.Name@Domain-12202019-045818-299/LT040900641989052601T2-SC20191220121726.tar.gz", "s3_bucket": "pds-satapps", "s3_dir": "solomonislands/landsat_4/"}'
+```
+
+Configuration options would be along these lines for a production system:
+
+```yaml
+worker:
+  image:
+    repository: "satapps/ard-workflow-ls"
+    tag: "1.1.0"
+  parallelism: 28
+  env:
+    - name: LOGLEVEL
+      value: "ERROR"
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: component
+              operator: In
+              values:
+              - worker
+          topologyKey: "kubernetes.io/hostname"
+
+jupyter:
+  enabled: false
+
+aws:
+  aws_access_key_id: "AKIAIOSFODNN7INVALID"
+  aws_secret_access_key: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYINVALIDKEY"
+```
+
+### Sentinel-1
+
+For Sentinel-1, jobs are defined as per example below:
+
+```bash
+rpush jobS1 '{"in_scene": "S1A_IW_GRDH_1SDV_20200210T064005_20200210T064040_031186_0395FE_3FBF", "s3_bucket": "pds-satapps", "s3_dir": "fiji/sentinel_1/", "ext_dem": "ancillary_products/SRTM1Sec/SRTM30_Fiji_E.tif"}'
+```
+
+Configuration options would be along these lines for a production system:
+
+```yaml
+worker:
+  image:
+    repository: "satapps/ard-workflow-s1"
+    tag: "1.1.0"
+  parallelism: 14
+  env:
+    - name: LOGLEVEL
+      value: "ERROR"
+    - name: ASF_USERNAME
+      value: "invalidusername"
+    - name: ASF_PWD
+      value: "invalidpassword"
+    - name: COPERNICUS_USERNAME
+      value: "invalidusername"
+    - name: COPERNICUS_PWD
+      value: "invalidpassword"
+    - name: S1_PROCESS_P1A
+      value: "/utils/cs_s1_pt1_bnr_Orb_Cal_ML.xml"
+    - name: S1_PROCESS_P2A
+      value: "/utils/cs_s1_pt2A_TF.xml"
+    - name: S1_PROCESS_P3A
+      value: "/utils/cs_s1_pt3A_TC_db.xml"
+    - name: S1_PROCESS_P4A
+      value: "/utils/cs_s1_pt4A_Sm_Bm_TC_lsm.xml"
+    - name: SNAP_GPT
+      value: "/opt/snap/bin/gpt"
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: component
+              operator: In
+              values:
+              - worker
+          topologyKey: "kubernetes.io/hostname"
+
+jupyter:
+  enabled: false
+
+aws:
+  aws_access_key_id: "AKIAIOSFODNN7INVALID"
+  aws_secret_access_key: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYINVALIDKEY"
+```
+
+### Water classification
+
+For water classification products, jobs are defined as per example below:
+
+```bash
+rpush jobWater '{"optical_yaml_path": "fiji/landsat_8/LC08_L1TP_072069_20130522/datacube-metadata.yaml", "s3_bucket": "pds-satapps", "s3_dir": "fiji/landsat_8_water/"}'
+```
+
+Configuration options would be along these lines for a production system:
+
+```yaml
+worker:
+  image:
+    repository: "satapps/ard-workflow-water-classification"
+    tag: "1.1.0"
+  parallelism: 28
+  env:
+    - name: LOGLEVEL
+      value: "ERROR"
+    - name: AWS_VIRTUAL_HOSTING
+      value: "FALSE"
+    - name: AWS_S3_ENDPOINT
+      value: "s3-uk-1.sa-catapult.co.uk"
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: component
+              operator: In
+              values:
+              - worker
+          topologyKey: "kubernetes.io/hostname"
+
+jupyter:
+  enabled: false
+
+aws:
+  aws_access_key_id: "AKIAIOSFODNN7INVALID"
+  aws_secret_access_key: "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"
 ```
 
 ## Cleaning up
