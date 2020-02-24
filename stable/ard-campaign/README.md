@@ -264,6 +264,18 @@ In order to extract the logs from all workers, issue:
 for pod in $(kubectl get pods -n $NAMESPACE -l component=worker -o name); do kubectl logs $pod -n $NAMESPACE; done
 ```
 
+## Cleaning up
+
+:warning: Dangerous Zone :warning:
+
+If you wish to undo changes to your Kubernetes cluster, simply issue the following commands:
+
+```bash
+helm delete $RELEASEREDIS --purge
+helm delete $RELEASEARD --purge
+kubectl delete namespace $NAMESPACE
+```
+
 ## Other missions and products
 
 ### Landsat
@@ -402,18 +414,6 @@ jupyter:
 aws:
   aws_access_key_id: "AKIAIOSFODNN7INVALID"
   aws_secret_access_key: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYINVALIDKEY"
-```
-
-## Cleaning up
-
-:warning: Dangerous Zone :warning:
-
-If you wish to undo changes to your Kubernetes cluster, simply issue the following commands:
-
-```bash
-helm delete $RELEASEREDIS --purge
-helm delete $RELEASEARD --purge
-kubectl delete namespace $NAMESPACE
 ```
 
 ## TODO
