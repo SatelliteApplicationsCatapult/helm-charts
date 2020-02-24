@@ -116,6 +116,9 @@ As example, for a development environment we might have:
 
 ```yaml
 worker:
+  image:
+    repository: "satapps/ard-workflow-s2"
+    tag: "1.1.0"
   parallelism: 1
   env:
     - name: AWS_NO_SIGN_REQUEST
@@ -134,6 +137,9 @@ For a production environment, we might have instead:
 
 ```yaml
 worker:
+  image:
+    repository: "satapps/ard-workflow-s2"
+    tag: "1.1.0"
   parallelism: 14
   env:
     - name: LOGLEVEL
