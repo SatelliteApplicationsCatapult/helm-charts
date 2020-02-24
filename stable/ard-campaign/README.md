@@ -236,7 +236,7 @@ The following tables list the configurable parameters of the Chart and their def
 | `aws_access_key_id`     | AWS key id     | `AKIAIOSFODNN7INVALID`                     |
 | `aws_secret_access_key` | AWS secret key | `wJalrXUtnFEMI/K7MDENG/bPxRfiCYINVALIDKEY` |
 
-### Job completion
+## Job completion
 
 A `Job` can be inspected for completion, e.g. by issuing:
 
@@ -256,7 +256,7 @@ s2job-ard-campaign-worker-gltrk   0/1     Completed   0          28h   10.244.3.
 s2job-ard-campaign-worker-jnsfl   0/1     Completed   0          28h   10.244.1.98    k8snode01   <none>           <none>
 ```
 
-### Logging
+## Logging
 
 In order to extract the logs from all workers, issue:
 
