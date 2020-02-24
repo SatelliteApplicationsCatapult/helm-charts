@@ -191,7 +191,7 @@ The following tables list the configurable parameters of the Chart and their def
 | Parameter                 | Description                     | Default                   |
 | --------------------------| --------------------------------| --------------------------|
 | `worker.image.repository` | Container image name            | `satapps/ard-workflow-s2` |
-| `worker.image.tag`        | Container image tag             | `0.5.0`                   |
+| `worker.image.tag`        | Container image tag             | `1.1.0`                   |
 | `worker.image.pullPolicy` | Container image pull policy     | `IfNotPresent`            |
 | `worker.parallelism`      | k8s job parallelism             | `3`                       |
 | `worker.resources`        | Container resources             | `{}`                      |
@@ -206,7 +206,7 @@ The following tables list the configurable parameters of the Chart and their def
 |----------------------------|---------------------------------|-----------------------------------|
 | `jupyter.enabled`          | Include optional Jupyter server | `true`                            |
 | `jupyter.image.repository` | Container image name            | `satapps/ard-workflow-s2-jupyter` |
-| `jupyter.image.tag`        | Container image tag             | `0.5.0`                           |
+| `jupyter.image.tag`        | Container image tag             | `1.1.0`                           |
 | `jupyter.image.pullPolicy` | Container image pull policy     | `IfNotPresent`                    |
 | `jupyter.service.type`     | k8s service type                | `LoadBalancer`                    |
 | `jupyter.service.port`     | k8s service port                | `80`                              |
@@ -231,7 +231,7 @@ A `Job` can be inspected for completion, e.g. by issuing:
 ```bash
 $ kubectl get job -n $NAMESPACE -o wide
 NAME                        COMPLETIONS   DURATION   AGE   CONTAINERS     IMAGES                          SELECTOR
-s2job-ard-campaign-worker   3/1 of 3      100m       28h   ard-campaign   satapps/ard-workflow-s2:0.5.0   controller-uid=302c9874-0e24-4977-9360-bc8cfc76df96
+s2job-ard-campaign-worker   3/1 of 3      100m       28h   ard-campaign   satapps/ard-workflow-s2:1.1.0   controller-uid=302c9874-0e24-4977-9360-bc8cfc76df96
 ```
 
 Alternatively, making sure that the relevant `Pod`s are in the `Completed` status is another possible route. E.g.:
