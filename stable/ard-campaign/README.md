@@ -107,6 +107,10 @@ Make Helm aware of the [Satellite Applications Catapult Helm chart repository](h
 ```bash
 helm repo add satapps https://satelliteapplicationscatapult.github.io/helm-charts
 helm repo update
+
+helm search ard-campaign
+NAME                    CHART VERSION   APP VERSION     DESCRIPTION
+satapps/ard-campaign    0.3.0           1.1.0           A Helm chart for deploying ARD processing campaigns with ...
 ```
 
 It's then necessary to create a *values-ard.yaml* file specific to the Kubernetes cluster and the ARD workflow that is being deployed.\
