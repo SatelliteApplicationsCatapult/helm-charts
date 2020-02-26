@@ -433,7 +433,7 @@ aws:
           initContainers:
           - name: init-worker
             image: busybox:1.28
-            command: ['sh', '-c', 'until nslookup redis-master; do echo waiting for redis-master; sleep 2; done;']
+            command: ['sh', '-c', 'until nc -z redis-master 6379; do sleep 2; done;']
     ```
 - Add an option (e.g. `worker.job.ttl`) to set `ttlSecondsAfterFinished` for the Worker's Job, in order to clean up finished Jobs. If defined such an option would then be populated within the [worker-job.yaml](templates/worker-job.yaml) template as per below:
     ```
