@@ -59,7 +59,13 @@ helm upgrade --install $RELEASEREDIS stable/redis \
   --values values-redis.yaml
 ```
 
-### Redis job definitions
+## Job definitions
+
+Per-mission and per-product work queues can be populated wither manually or programmatically as per below.
+
+For all available missions and products see the [relevant section](https://github.com/SatelliteApplicationsCatapult/helm-charts/tree/master/stable/ard-campaign#other-missions-and-products) of this document.
+
+### Manual job definition
 
 The list with key `jobS2` is the work queue for Sentinel-2 ARD work items. Insert items with e.g.:
 
@@ -87,7 +93,9 @@ rpush jobS2 '{"in_scene": "S2A_MSIL2A_20190812T235741_N0213_R030_T56LRR_20190813
 EOF
 ```
 
-For other missions and products see the [relevant section](https://github.com/SatelliteApplicationsCatapult/helm-charts/tree/master/stable/ard-campaign#other-missions-and-products).
+### Automatic job definition
+
+See the [Using Kubernetes section](https://github.com/SatelliteApplicationsCatapult/ard-docker-images/blob/master/job-insert/README.md#using-kubernetes) within the [ard-docker-images repo](https://github.com/SatelliteApplicationsCatapult/ard-docker-images).
 
 ## ARD Chart Details
 
@@ -417,7 +425,6 @@ aws:
 ```
 
 ## TODO
-- In order to automatically add work items to a processing queue we could use the `satapps/ard-workflow-job-insert` Docker image and inject such work items by means of a `ConfigMap`, exposed as `/var/opt/work-items.list`.
 - Add an option (e.g. `worker.job.ttl`) to set `ttlSecondsAfterFinished` for the Worker's Job, in order to clean up finished Jobs. If defined such an option would then be populated within the [worker-job.yaml](templates/worker-job.yaml) template as per below:
     ```
     spec:
