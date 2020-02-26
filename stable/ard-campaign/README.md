@@ -425,6 +425,16 @@ aws:
 ```
 
 ## TODO
+- Use an [initContainer](https://kubernetes.io/docs/concepts/workloads/pods/init-containers) for worker Pods to make sure the redis-master service is up before attempting to connect. E.g.:
+    ```
+    spec:
+      template:
+        spec:
+          initContainers:
+          - name: init-worker
+            image: busybox:1.28
+            command: ['sh', '-c', 'until nslookup redis-master; do echo waiting for redis-master; sleep 2; done;']
+    ```
 - Add an option (e.g. `worker.job.ttl`) to set `ttlSecondsAfterFinished` for the Worker's Job, in order to clean up finished Jobs. If defined such an option would then be populated within the [worker-job.yaml](templates/worker-job.yaml) template as per below:
     ```
     spec:
