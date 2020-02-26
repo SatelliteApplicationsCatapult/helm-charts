@@ -421,8 +421,8 @@ aws:
 - Add an option (e.g. `worker.job.ttl`) to set `ttlSecondsAfterFinished` for the Worker's Job, in order to clean up finished Jobs. If defined such an option would then be populated within the [worker-job.yaml](templates/worker-job.yaml) template as per below:
     ```
     spec:
-      {{- if .Values.ttlSecondsAfterFinished }}
-      ttlSecondsAfterFinished: {{ .Values.ttlSecondsAfterFinished }}
+      {{- if .Values.worker.job.ttl }}
+      ttlSecondsAfterFinished: {{ .Values.worker.job.ttl }}
       {{- end }}
       template:
         ...
