@@ -118,7 +118,7 @@ helm repo update
 
 helm search ard-campaign
 NAME                    CHART VERSION   APP VERSION     DESCRIPTION
-satapps/ard-campaign    0.3.0           1.1.1           A Helm chart for deploying ARD processing campaigns with ...
+satapps/ard-campaign    0.3.1           1.1.1           A Helm chart for deploying ARD processing campaigns with ...
 ```
 
 It's then necessary to create a *values-ard.yaml* file specific to the Kubernetes cluster and the ARD workflow that is being deployed.\
@@ -193,6 +193,7 @@ RELEASEARD=s2job
 
 helm upgrade --install $RELEASEARD satapps/ard-campaign \
   --namespace $NAMESPACE \
+  --version 0.3.1 \
   --values values-ard.yaml
 ```
 
