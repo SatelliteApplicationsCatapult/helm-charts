@@ -157,15 +157,6 @@ worker:
     - name: LOGLEVEL
       value: "ERROR"
   affinity:
-#    podAntiAffinity:
-#      requiredDuringSchedulingIgnoredDuringExecution:
-#      - labelSelector:
-#          matchExpressions:
-#          - key: component
-#            operator: In
-#            values:
-#            - worker
-#        topologyKey: "kubernetes.io/hostname"
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
       - weight: 100
