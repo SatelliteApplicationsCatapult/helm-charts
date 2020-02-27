@@ -61,7 +61,7 @@ helm upgrade --install $RELEASEREDIS stable/redis \
 
 ## Job definitions
 
-Per-mission and per-product work queues can be populated wither manually or programmatically as per below.
+Per-mission and per-product work queues can be populated with job definitions either manually or programmatically.
 
 For all available missions and products see the [relevant section](https://github.com/SatelliteApplicationsCatapult/helm-charts/tree/master/stable/ard-campaign#other-missions-and-products) of this document.
 
