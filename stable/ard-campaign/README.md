@@ -55,7 +55,7 @@ RELEASEREDIS=redis
 
 helm upgrade --install $RELEASEREDIS stable/redis \
   --namespace $NAMESPACE \
-  --version=9.1.3 \
+  --version 9.1.3 \
   --values values-redis.yaml
 ```
 
@@ -118,7 +118,7 @@ helm repo update
 
 helm search ard-campaign
 NAME                    CHART VERSION   APP VERSION     DESCRIPTION
-satapps/ard-campaign    0.3.0           1.1.0           A Helm chart for deploying ARD processing campaigns with ...
+satapps/ard-campaign    0.3.0           1.1.1           A Helm chart for deploying ARD processing campaigns with ...
 ```
 
 It's then necessary to create a *values-ard.yaml* file specific to the Kubernetes cluster and the ARD workflow that is being deployed.\
@@ -130,7 +130,7 @@ As example, for a development environment we might have:
 worker:
   image:
     repository: "satapps/ard-workflow-s2"
-    tag: "1.1.0"
+    tag: "1.1.1"
   parallelism: 1
   env:
     - name: AWS_NO_SIGN_REQUEST
@@ -151,7 +151,7 @@ For a production environment, we might have instead:
 worker:
   image:
     repository: "satapps/ard-workflow-s2"
-    tag: "1.1.0"
+    tag: "1.1.1"
   parallelism: 14
   env:
     - name: LOGLEVEL
@@ -211,7 +211,7 @@ The following tables list the configurable parameters of the Chart and their def
 | Parameter                 | Description                     | Default                   |
 | --------------------------| --------------------------------| --------------------------|
 | `worker.image.repository` | Container image name            | `satapps/ard-workflow-s2` |
-| `worker.image.tag`        | Container image tag             | `1.1.0`                   |
+| `worker.image.tag`        | Container image tag             | `1.1.1`                   |
 | `worker.image.pullPolicy` | Container image pull policy     | `IfNotPresent`            |
 | `worker.parallelism`      | k8s job parallelism             | `3`                       |
 | `worker.resources`        | Container resources             | `{}`                      |
@@ -226,7 +226,7 @@ The following tables list the configurable parameters of the Chart and their def
 |----------------------------|---------------------------------|-----------------------------------|
 | `jupyter.enabled`          | Include optional Jupyter server | `true`                            |
 | `jupyter.image.repository` | Container image name            | `satapps/ard-workflow-s2-jupyter` |
-| `jupyter.image.tag`        | Container image tag             | `1.1.0`                           |
+| `jupyter.image.tag`        | Container image tag             | `1.1.1`                           |
 | `jupyter.image.pullPolicy` | Container image pull policy     | `IfNotPresent`                    |
 | `jupyter.service.type`     | k8s service type                | `LoadBalancer`                    |
 | `jupyter.service.port`     | k8s service port                | `80`                              |
@@ -251,7 +251,7 @@ A `Job` can be inspected for completion, e.g. by issuing:
 ```bash
 $ kubectl get job -n $NAMESPACE -o wide
 NAME                        COMPLETIONS   DURATION   AGE   CONTAINERS     IMAGES                          SELECTOR
-s2job-ard-campaign-worker   3/1 of 3      100m       28h   ard-campaign   satapps/ard-workflow-s2:1.1.0   controller-uid=302c9874-0e24-4977-9360-bc8cfc76df96
+s2job-ard-campaign-worker   3/1 of 3      100m       28h   ard-campaign   satapps/ard-workflow-s2:1.1.1   controller-uid=302c9874-0e24-4977-9360-bc8cfc76df96
 ```
 
 Alternatively, making sure that the relevant `Pod`s are in the `Completed` status is another possible route. E.g.:
@@ -300,7 +300,7 @@ Configuration options would be along these lines for a production system:
 worker:
   image:
     repository: "satapps/ard-workflow-ls"
-    tag: "1.1.0"
+    tag: "1.1.1"
   parallelism: 28
   env:
     - name: LOGLEVEL
@@ -340,7 +340,7 @@ Configuration options would be along these lines for a production system:
 worker:
   image:
     repository: "satapps/ard-workflow-s1"
-    tag: "1.1.0"
+    tag: "1.1.1"
   parallelism: 14
   env:
     - name: LOGLEVEL
@@ -398,7 +398,7 @@ Configuration options would be along these lines for a production system:
 worker:
   image:
     repository: "satapps/ard-workflow-water-classification"
-    tag: "1.1.0"
+    tag: "1.1.1"
   parallelism: 28
   env:
     - name: LOGLEVEL
