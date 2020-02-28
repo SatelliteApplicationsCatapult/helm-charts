@@ -95,7 +95,7 @@ EOF
 
 ### Automatic job definition
 
-See the [Using Kubernetes section](https://github.com/SatelliteApplicationsCatapult/ard-docker-images/blob/master/job-insert/README.md#using-kubernetes) within the [ard-docker-images repo](https://github.com/SatelliteApplicationsCatapult/ard-docker-images).
+See the [Using Kubernetes section of the Job insertion Docker image](https://github.com/SatelliteApplicationsCatapult/ard-docker-images/blob/master/job-insert/README.md#using-kubernetes) within the [ard-docker-images repo](https://github.com/SatelliteApplicationsCatapult/ard-docker-images).
 
 ## ARD Chart Details
 
