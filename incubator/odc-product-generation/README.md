@@ -98,8 +98,7 @@ See the [Using Kubernetes section of the Job insertion Docker image](https://git
 ## Chart Details
 
 By default, this Chart will deploy the following:
-- 1 x ConfigMap (/etc/datacube.conf)
-- 1 x Job
+- 1 x Worker
 
 ### Installing the Chart
 
