@@ -109,8 +109,8 @@ helm repo add satapps https://satelliteapplicationscatapult.github.io/helm-chart
 helm repo update
 
 helm search odc-product-generation
-NAME                              CHART VERSION   APP VERSION     DESCRIPTION
-satapps/odc-product-generation    0.1.0           0.1.0           A Helm chart for generating routine EO products with Kubernetes
+NAME                            CHART VERSION   APP VERSION     DESCRIPTION
+satapps/odc-product-generation  0.1.0           0.1.0           A Helm chart for generating routine EO products with Kube...
 ```
 
 It's then necessary to create a *values-worker.yaml* file specific to the Kubernetes cluster, Open Data Cube and Dask deployments in use.\
@@ -147,6 +147,52 @@ helm upgrade --install $RELEASEODCPROD satapps/odc-product-generation \
   --version 0.1.0 \
   --values values-worker.yaml
 ```
+
+## Default Configuration
+
+The following tables list the configurable parameters of the Chart and their default values.
+
+### Data Cube DB Connection Parameters
+
+| Parameter             | Description | Default                                              |
+| ----------------------| ------------| -----------------------------------------------------|
+| `datacubeDB.host`     | Host        | `datacubedb-postgresql.datacubedb.svc.cluster.local` |
+| `datacubeDB.database` | DB name     | `datacube`                                           |
+| `datacubeDB.user`     | User        | `postgres`                                           |
+| `datacubeDB.password` | Password    | `localuser1234`                                      |
+
+### Redis Master Connection Parameters
+
+| Parameter             | Description | Default        |
+| ----------------------| ------------| ---------------|
+| `redisServiceHost`    | Host        | `redis-master` | 
+
+### Dask Cluster Connection Parameters
+
+| Parameter             | Description | Default                                              |
+| ----------------------| ------------| -----------------------------------------------------|
+| `daskShedulerHost`    | Host        | `dask-scheduler.dask.svc.cluster.local`              | 
+
+### Worker
+
+| Parameter          | Description                     | Default                |
+| -------------------| --------------------------------| -----------------------|
+| `image.repository` | Container image name            | `satapps/odc-products` |
+| `image.tag`        | Container image tag             | `0.0.90`               |
+| `image.pullPolicy` | Container image pull policy     | `IfNotPresent`         |
+| `resources`        | Container resources             | `{}`                   |
+| `env`              | Container environment variables | `{}`                   |
+| `nodeSelector`     | nodeSelector                    | `{}`                   |
+| `tolerations`      | Tolerations                     | `[]`                   |
+| `affinity`         | Container affinity              | `{}`                   |
+| `ttlSeconds`       | TTL in seconds after finished   | `nil`                  |
+
+### AWS
+
+| Parameter               | Description    | Default                                    |
+|-------------------------|----------------|--------------------------------------------|
+| `aws_access_key_id`     | AWS key id     | `AKIAIOSFODNN7INVALID`                     |
+| `aws_secret_access_key` | AWS secret key | `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` |
 
 ## Logging
 
