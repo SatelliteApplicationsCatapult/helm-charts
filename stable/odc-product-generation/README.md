@@ -163,15 +163,15 @@ The following tables list the configurable parameters of the Chart and their def
 
 ### Redis Master Connection Parameters
 
-| Parameter             | Description | Default        |
-| ----------------------| ------------| ---------------|
-| `redisServiceHost`    | Host        | `redis-master` | 
+| Parameter          | Description | Default        |
+| -------------------| ------------| ---------------|
+| `redisServiceHost` | Host        | `redis-master` | 
 
 ### Dask Cluster Connection Parameters
 
-| Parameter             | Description | Default                                              |
-| ----------------------| ------------| -----------------------------------------------------|
-| `daskShedulerHost`    | Host        | `dask-scheduler.dask.svc.cluster.local`              | 
+| Parameter           | Description | Default                                 |
+| --------------------| ------------| ----------------------------------------|
+| `daskSchedulerHost` | Host        | `dask-scheduler.dask.svc.cluster.local` | 
 
 ### Worker
 

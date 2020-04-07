@@ -35,7 +35,7 @@ spec:
             - name: REDIS_SERVICE_HOST
               value: "{{ .Values.redisServiceHost }}"
             - name: DASK_SCHEDULER_HOST
-              value: "{{ .Values.daskShedulerHost }}"
+              value: "{{ .Values.daskSchedulerHost }}"
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
