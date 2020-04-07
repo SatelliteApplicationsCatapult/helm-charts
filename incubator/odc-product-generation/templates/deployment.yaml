@@ -1,0 +1,74 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "odc-product-generation.fullname" . }}
+  labels:
+{{ include "odc-product-generation.labels" . | indent 4 }}
+spec:
+  parallelism: 1
+{{- with .Values.ttlSeconds }}
+  ttlSecondsAfterFinished: {{ .Values.ttlSeconds }}
+{{- end }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "odc-product-generation.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      restartPolicy: Never
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      initContainers:
+        - name: init-worker
+          image: busybox:1.28
+          env:
+            - name: REDIS_SERVICE_HOST
+              value: "{{ .Values.redisServiceHost }}"
+          command: ['sh', '-c', 'until nslookup $REDIS_SERVICE_HOST; do echo Waiting for redis-master; sleep 2; done;']
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: REDIS_SERVICE_HOST
+              value: "{{ .Values.redisServiceHost }}"
+            - name: DASK_SCHEDULER_HOST
+              value: "{{ .Values.daskShedulerHost }}"
+            {{- if .Values.env }}
+            {{- $extraEnvType := typeOf .Values.env }}
+            {{- /* If we have a list, embed that here directly. This allows for complex configuration from configmap, downward API, etc. */}}
+            {{- if eq $extraEnvType "[]interface {}" }}
+            {{- .Values.env | toYaml | trimSuffix "\n" | nindent 12 }}
+            {{- else if eq $extraEnvType "map[string]interface {}" }}
+            {{- /* If we have a map, treat those as key-value pairs. */}}
+            {{- range $key, $value := .Values.env }}
+            - name: {{ $key | quote }}
+              value: {{ $value | quote }}
+            {{- end }}
+            {{- end }}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /etc/datacube.conf
+              name: datacube-conf
+              subPath: datacube.conf
+      volumes:
+        - configMap:
+            defaultMode: 420
+            name: datacube-conf
+          name: datacube-conf
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

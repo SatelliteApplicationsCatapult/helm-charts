@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: datacube-conf
+  labels:
+{{ include "odc-product-generation.labels" . | indent 4 }}
+data:
+  datacube.conf: |
+    [datacube]
+    db_database: {{ .Values.datacubeDB.database }}
+    # A blank host will use a local socket. Specify a hostname (such as localhost) to use TCP.
+    db_hostname: {{ .Values.datacubeDB.host }}
+    # Credentials are optional: you might have other Postgres authentication configured.
+    # The default username is the current user id
+    db_username: {{ .Values.datacubeDB.user }}
+    # A blank password will fall back to default postgres driver authentication, such as reading your ~/.pgpass file.
+    db_password: {{ .Values.datacubeDB.password }}
