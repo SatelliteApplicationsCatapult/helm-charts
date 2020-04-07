@@ -148,6 +148,31 @@ helm upgrade --install $RELEASEODCPROD satapps/odc-product-generation \
   --values values-worker.yaml
 ```
 
+## Default Configuration
+
+The following tables list the configurable parameters of the Chart and their default values.
+
+### Generic
+
+| Parameter          | Description                     | Default                |
+| -------------------| --------------------------------| -----------------------|
+| `image.repository` | Container image name            | `satapps/odc-products` |
+| `image.tag`        | Container image tag             | `0.0.90`               |
+| `image.pullPolicy` | Container image pull policy     | `IfNotPresent`         |
+| `resources`        | Container resources             | `{}`                   |
+| `env`              | Container environment variables | `{}`                   |
+| `nodeSelector`     | nodeSelector                    | `{}`                   |
+| `tolerations`      | Tolerations                     | `[]`                   |
+| `affinity`         | Container affinity              | `{}`                   |
+
+### AWS
+
+| Parameter               | Description    | Default                                    |
+|-------------------------|----------------|--------------------------------------------|
+| `aws_access_key_id`     | AWS key id     | `AKIAIOSFODNN7INVALID`                     |
+| `aws_secret_access_key` | AWS secret key | `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` |
+
+
 ## Logging
 
 In order to extract the logs from all workers, issue:
