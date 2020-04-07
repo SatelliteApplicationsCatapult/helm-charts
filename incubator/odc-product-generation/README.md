@@ -108,6 +108,11 @@ Make Helm aware of the [Satellite Applications Catapult Helm chart repository](h
 helm repo add satapps https://satelliteapplicationscatapult.github.io/helm-charts
 helm repo update
 
+helm search odc-product-generation
+NAME                              CHART VERSION   APP VERSION     DESCRIPTION
+satapps/odc-product-generation    0.4.0           1.2.1           A Helm chart for generating routine EO products with Kubernetes
+```
+
 It's then necessary to create a *values-worker.yaml* file specific to the Kubernetes cluster, Open Data Cube and Dask deployments in use.\
 For the full set of configurable options see [values.yaml](values.yaml).
 
