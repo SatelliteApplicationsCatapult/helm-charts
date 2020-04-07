@@ -152,7 +152,28 @@ helm upgrade --install $RELEASEODCPROD satapps/odc-product-generation \
 
 The following tables list the configurable parameters of the Chart and their default values.
 
-### Generic
+### Data Cube DB Connection Parameters
+
+| Parameter             | Description | Default                                              |
+| ----------------------| ------------| -----------------------------------------------------|
+| `datacubeDB.host`     | Host        | `datacubedb-postgresql.datacubedb.svc.cluster.local` |
+| `datacubeDB.database` | DB name     | `datacube`                                           |
+| `datacubeDB.user`     | User        | `postgres`                                           |
+| `datacubeDB.password` | Password    | `localuser1234`                                      |
+
+### Redis Master Connection Parameters
+
+| Parameter             | Description | Default        |
+| ----------------------| ------------| ---------------|
+| `redisServiceHost`    | Host        | `redis-master` | 
+
+### Dask Cluster Connection Parameters
+
+| Parameter             | Description | Default                                              |
+| ----------------------| ------------| -----------------------------------------------------|
+| `daskShedulerHost`    | Host        | `dask-scheduler.dask.svc.cluster.local`              | 
+
+### Worker
 
 | Parameter          | Description                     | Default                |
 | -------------------| --------------------------------| -----------------------|
@@ -164,6 +185,7 @@ The following tables list the configurable parameters of the Chart and their def
 | `nodeSelector`     | nodeSelector                    | `{}`                   |
 | `tolerations`      | Tolerations                     | `[]`                   |
 | `affinity`         | Container affinity              | `{}`                   |
+| `ttlSeconds`       | TTL in seconds after finished   | `nil`                  |
 
 ### AWS
 
@@ -171,7 +193,6 @@ The following tables list the configurable parameters of the Chart and their def
 |-------------------------|----------------|--------------------------------------------|
 | `aws_access_key_id`     | AWS key id     | `AKIAIOSFODNN7INVALID`                     |
 | `aws_secret_access_key` | AWS secret key | `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` |
-
 
 ## Logging
 
