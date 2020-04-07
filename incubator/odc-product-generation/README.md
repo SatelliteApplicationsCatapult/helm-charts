@@ -78,6 +78,9 @@ $ kubectl run --namespace $NAMESPACEODCPROD redis-client --rm --tty -i --restart
 I have no name!@redis-client:/$ redis-cli -h redis-master
 
 redis-master:6379> rpush jobProduct '{"job_code": "geomedian", "product": "ls8_usgs_sr_scene", "query_x_from": "2130000.0", "query_y_from": "3499700.0", "query_x_to": "2233300.0", "query_y_to": "3600300.0", "query_crs": "EPSG:3460", "time_from": "2019-01-01", "time_to": "2019-12-31", "output_crs": "EPSG:3460", "prefix": "common_sensing/fiji/landsat_8_geomedian/2019"}'
+(integer) 1
+redis-master:6379> lrange jobProduct 0 -1
+1) '{\"job_code\": \"geomedian\", \"product\": \"ls8_usgs_sr_scene\", \"query_x_from\": \"2130000.0\", \"query_y_from\": \"3499700.0\", \"query_x_to\": \"2233300.0\", \"query_y_to\": \"3600300.0\", \"query_crs\": \"EPSG:3460\", \"time_from\": \"2019-01-01\", \"time_to\": \"2019-12-31\", \"output_crs\": \"EPSG:3460\", \"prefix\": \"luigi/fiji/landsat_8_geomedian/2019-dask-2.14.0-gdal-2.4.4-helm\"}'
 ```
 
 For [mass insertion](https://redis.io/topics/mass-insert) you can use e.g.:
