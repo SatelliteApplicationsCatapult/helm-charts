@@ -133,8 +133,8 @@ env:
     value: "http://s3-uk-1.sa-catapult.co.uk"
 
 aws:
-  aws_access_key_id: "AKIAIOSFODNN7INVALID"
-  aws_secret_access_key: "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"
+  accessKeyId: "AKIAIOSFODNN7INVALID"
+  secretAccessKey: "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"
 ```
 
 To install the Chart with the release name `geomedian`:
