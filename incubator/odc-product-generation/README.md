@@ -4,7 +4,7 @@ In order to use the deployment material described here you need access to a Kube
 
 ## Scope
 
-The solution provided here is suitable to run routine product processing leveraging a distributed Dask cluster.
+The solution provided here is suitable to generate summary products leveraging an [Open Data Cube](https://www.opendatacube.org/) instance and a distributed [Dask](https://dask.org/) cluster.
 
 ## Architecture
 
