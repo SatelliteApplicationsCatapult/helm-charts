@@ -12,6 +12,10 @@ datacubeDB:
   user: "postgres"
   password: "localuser1234"
 
+aws:
+  aws_access_key_id: "AKIAIOSFODNN7INVALID"
+  aws_secret_access_key: "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"
+
 image:
   repository: "satapps/odc-products"
   tag: "0.0.90"

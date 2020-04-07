@@ -42,6 +42,10 @@ configmap: |-
   appendonly yes
   # Disable RDB persistence, AOF persistence already enabled.
   save ""
+
+aws:
+  aws_access_key_id: "AKIAIOSFODNN7INVALID"
+  aws_secret_access_key: "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"
 ```
 
 For the full set of configurable options see [values.yaml](https://github.com/helm/charts/blob/master/stable/redis/values.yaml).
