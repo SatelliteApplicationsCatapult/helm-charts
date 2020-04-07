@@ -189,10 +189,10 @@ The following tables list the configurable parameters of the Chart and their def
 
 ### AWS
 
-| Parameter               | Description    | Default                                    |
-|-------------------------|----------------|--------------------------------------------|
-| `aws_access_key_id`     | AWS key id     | `AKIAIOSFODNN7INVALID`                     |
-| `aws_secret_access_key` | AWS secret key | `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` |
+| Parameter             | Description    | Default                                    |
+|-----------------------|----------------|--------------------------------------------|
+| `aws.accessKeyId`     | AWS key id     | `AKIAIOSFODNN7INVALID`                     |
+| `aws.secretAccessKey` | AWS secret key | `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` |
 
 ## Logging
 
