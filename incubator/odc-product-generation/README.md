@@ -42,10 +42,6 @@ configmap: |-
   appendonly yes
   # Disable RDB persistence, AOF persistence already enabled.
   save ""
-
-aws:
-  aws_access_key_id: "AKIAIOSFODNN7INVALID"
-  aws_secret_access_key: "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"
 ```
 
 For the full set of configurable options see [values.yaml](https://github.com/helm/charts/blob/master/stable/redis/values.yaml).
@@ -132,14 +128,14 @@ image:
 env:
   - name: PYTHONUNBUFFERED
     value: "0"
-  - name: AWS_ACCESS_KEY_ID
-    value: "AKIAIOSFODNN7INVALID"
-  - name: AWS_SECRET_ACCESS_KEY
-    value: "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"
   - name: AWS_VIRTUAL_HOSTING
     value: "FALSE"
   - name: AWS_S3_ENDPOINT_URL
     value: "http://s3-uk-1.sa-catapult.co.uk"
+
+aws:
+  aws_access_key_id: "AKIAIOSFODNN7INVALID"
+  aws_secret_access_key: "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"
 ```
 
 To install the Chart with the release name `geomedian`:
