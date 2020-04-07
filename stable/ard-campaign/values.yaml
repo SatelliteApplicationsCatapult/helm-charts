@@ -33,6 +33,6 @@ jupyter:
   affinity: {}
 
 aws:
-  aws_access_key_id: "AKIAIOSFODNN7INVALID"
-  aws_secret_access_key: "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"
+  accessKeyId: "AKIAIOSFODNN7INVALID"
+  secretAccessKey: "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"
 

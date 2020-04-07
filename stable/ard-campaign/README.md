@@ -173,8 +173,8 @@ jupyter:
   enabled: false
 
 aws:
-  aws_access_key_id: "AKIAIOSFODNN7INVALID"
-  aws_secret_access_key: "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"
+  accessKeyId: "AKIAIOSFODNN7INVALID"
+  secretAccessKey: "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"
 ```
 
 To install the Chart with the release name `s2job`:
@@ -231,10 +231,10 @@ The following tables list the configurable parameters of the Chart and their def
 
 ### AWS
 
-| Parameter               | Description    | Default                                    |
-|-------------------------|----------------|--------------------------------------------|
-| `aws_access_key_id`     | AWS key id     | `AKIAIOSFODNN7INVALID`                     |
-| `aws_secret_access_key` | AWS secret key | `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` |
+| Parameter             | Description    | Default                                    |
+|-----------------------|----------------|--------------------------------------------|
+| `aws.accessKeyId`     | AWS key id     | `AKIAIOSFODNN7INVALID`                     |
+| `aws.secretAccessKey` | AWS secret key | `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` |
 
 ## Job completion
 
@@ -314,8 +314,8 @@ jupyter:
   enabled: false
 
 aws:
-  aws_access_key_id: "AKIAIOSFODNN7INVALID"
-  aws_secret_access_key: "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"
+  accessKeyId: "AKIAIOSFODNN7INVALID"
+  secretAccessKey: "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"
 ```
 
 ### Sentinel-1
@@ -372,8 +372,8 @@ jupyter:
   enabled: false
 
 aws:
-  aws_access_key_id: "AKIAIOSFODNN7INVALID"
-  aws_secret_access_key: "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"
+  accessKeyId: "AKIAIOSFODNN7INVALID"
+  secretAccessKey: "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"
 ```
 
 ### Water classification
@@ -412,8 +412,8 @@ jupyter:
   enabled: false
 
 aws:
-  aws_access_key_id: "AKIAIOSFODNN7INVALID"
-  aws_secret_access_key: "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"
+  accessKeyId: "AKIAIOSFODNN7INVALID"
+  secretAccessKey: "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"
 ```
 
 ## TODO
