@@ -110,7 +110,7 @@ helm repo update
 
 helm search odc-product-generation
 NAME                            CHART VERSION   APP VERSION     DESCRIPTION
-satapps/odc-product-generation  0.2.0           0.0.90          A Helm chart for generating routine EO products with Kube...
+satapps/odc-product-generation  0.3.0           0.0.90          A Helm chart for generating routine EO products with Kube...
 ```
 
 It's then necessary to create a *values-worker.yaml* file specific to the Kubernetes cluster, Open Data Cube and Dask deployments in use.\
