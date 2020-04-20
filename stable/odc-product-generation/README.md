@@ -131,6 +131,8 @@ env:
     value: "FALSE"
   - name: AWS_S3_ENDPOINT_URL
     value: "http://s3-uk-1.sa-catapult.co.uk"
+  - name: EXTRA_PIP_PACKAGES
+    value: "git+https://github.com/SatelliteApplicationsCatapult/datacube-utilities.git#egg=datacube_utilities"
 
 aws:
   accessKeyId: "AKIAIOSFODNN7INVALID"
