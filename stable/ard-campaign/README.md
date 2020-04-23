@@ -438,3 +438,4 @@ aws:
       template:
         ...
     ```
+    For reference, check [this implementation](https://github.com/SatelliteApplicationsCatapult/helm-charts/blob/master/stable/odc-product-generation/templates/deployment.yaml#L9).
