@@ -439,3 +439,4 @@ aws:
         ...
     ```
     For reference, check [this implementation](https://github.com/SatelliteApplicationsCatapult/helm-charts/blob/master/stable/odc-product-generation/templates/deployment.yaml#L9).
+- Although as not critical as AWS keys, should we use a Kubernetes `Secret` for ASF and Copernicus Hub access details?
