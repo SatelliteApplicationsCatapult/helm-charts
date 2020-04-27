@@ -55,8 +55,6 @@ spec:
             {{- end }}
             {{- end }}
             {{- end }}
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - mountPath: /etc/datacube.conf
               name: datacube-conf
