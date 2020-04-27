@@ -95,3 +95,49 @@ By default, this Chart will deploy the following:
 
 > **Tip**: See the [Kubernetes Service Type Docs](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types)
 for the differences between ClusterIP, NodePort, and LoadBalancer.
+
+### Installing the Chart - WIP
+
+It's then necessary to create a *values-ard.yaml* file specific to the Kubernetes cluster and the ARD workflow that is being deployed.\
+For the full set of configurable options see [values.yaml](values.yaml).
+
+As example, for a development environment we might have:
+
+```yaml
+worker:
+  env:
+    - name: AWS_NO_SIGN_REQUEST
+      value: "YES"
+    - name: AWS_VIRTUAL_HOSTING
+      value: "FALSE"
+    - name: AWS_S3_ENDPOINT
+      value: s3-uk-1.sa-catapult.co.uk
+
+server:
+  env:
+    - name: APP_DEBUG
+      value: "true"
+```
+
+For a production environment, we might have instead:
+
+```yaml
+worker:
+  replicaCount: 7
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: component
+              operator: In
+              values:
+              - worker
+          topologyKey: "kubernetes.io/hostname"
+
+aws:
+  accessKeyId: "AKIAIOSFODNN7INVALID"
+  secretAccessKey: "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"
+```
