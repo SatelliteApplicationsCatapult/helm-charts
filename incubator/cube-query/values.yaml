@@ -30,6 +30,8 @@ worker:
   tolerations: []
   affinity: {}
 
+redisServiceHost: "redis-master"
+
 # Retrieve the password with e.g.: POSTGRES_PASSWORD=$(kubectl get secret --namespace datacubedb datacubedb-postgresql -o jsonpath="{.data.postgresql-password}" | base64 --decode)
 datacubeDB:
   host: "datacubedb-postgresql.datacubedb.svc.cluster.local"
