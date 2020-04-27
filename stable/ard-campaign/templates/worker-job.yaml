@@ -18,6 +18,13 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+      initContainers:
+        - name: init-worker
+          image: busybox:1.28
+          env:
+            - name: REDIS_SERVICE_HOST
+              value: "{{ .Values.redisServiceHost }}"
+          command: ['sh', '-c', 'until nslookup $REDIS_SERVICE_HOST; do echo Waiting for redis-master; sleep 2; done;']
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag }}"
