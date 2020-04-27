@@ -1,11 +1,16 @@
 apiVersion: batch/v1
-kind: Job
+kind: Deployment
 metadata:
   name: {{ include "cube-query.fullname" . }}-worker
   labels:
 {{ include "cube-query.labels" . | indent 4 }}
 spec:
-  parallelism: {{ .Values.worker.parallelism }}
+  replicas: {{ .Values.worker.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "cube-query.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      component: worker
   template:
     metadata:
       labels:
