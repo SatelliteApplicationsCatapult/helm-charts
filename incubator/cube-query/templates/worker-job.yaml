@@ -48,6 +48,11 @@ spec:
             {{- end }}
             {{- end }}
             {{- end }}
+      volumes:
+        - configMap:
+            defaultMode: 420
+            name: datacube-conf
+          name: datacube-conf
     {{- with .Values.worker.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
