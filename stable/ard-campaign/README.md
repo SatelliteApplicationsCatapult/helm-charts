@@ -32,6 +32,36 @@ master:
   ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
   ##
   persistence:
+    enabled: false
+
+## Redis config file
+## ref: https://redis.io/topics/config
+##
+configmap: |-
+  # Enable AOF https://redis.io/topics/persistence#append-only-file
+  appendonly yes
+  # Disable RDB persistence, AOF persistence already enabled.
+  save ""
+```
+
+For a production environment, we might have instead:
+
+```yaml
+## Cluster settings
+cluster:
+  enabled: true
+
+## Use password authentication
+usePassword: false
+
+##
+## Redis Master parameters
+##
+master:
+  ## Enable persistence using Persistent Volume Claims
+  ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+  ##
+  persistence:
     enabled: true
     storageClass: "fast"
     size: "1Gi"
