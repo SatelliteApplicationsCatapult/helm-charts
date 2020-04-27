@@ -1,4 +1,4 @@
-# Cube Query Helm Chart
+# CubeQuery Helm Chart
 
 In order to use the deployment material described here you need access to a Kubernetes server or cluster with Helm installed. For development and learning purposes [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/) and [microk8s](https://microk8s.io/) can be used too.
 
