@@ -1,5 +1,3 @@
-{{ if .Values.server.enabled -}}
-
 apiVersion: v1
 kind: Pod
 metadata:
@@ -15,5 +13,3 @@ spec:
       command: ['wget']
       args:  ['{{ include "cube-query.fullname" . }}-server:{{ .Values.server.service.port }}']
   restartPolicy: Never
-
-{{- end }}
