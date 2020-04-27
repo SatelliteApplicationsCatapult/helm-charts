@@ -25,6 +25,8 @@ spec:
           resources:
             {{- toYaml .Values.worker.resources | nindent 12 }}
           env:
+            - name: REDIS_SERVICE_HOST
+              value: "{{ .Values.redisServiceHost }}"
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
