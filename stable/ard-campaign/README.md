@@ -32,7 +32,9 @@ master:
   ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
   ##
   persistence:
-    enabled: false
+    enabled: true
+    storageClass: "fast"
+    size: "1Gi"
 
 ## Redis config file
 ## ref: https://redis.io/topics/config
