@@ -29,6 +29,10 @@ spec:
           imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
           resources:
             {{- toYaml .Values.worker.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /etc/datacube.conf
+              name: datacube-conf
+              subPath: datacube.conf
           env:
             - name: REDIS_URL
               value: "redis://{{ .Values.redisServiceHost }}:6379/"
@@ -55,10 +59,6 @@ spec:
             {{- end }}
             {{- end }}
             {{- end }}
-          volumeMounts:
-            - mountPath: /etc/datacube.conf
-              name: datacube-conf
-              subPath: datacube.conf
       volumes:
         - configMap:
             defaultMode: 420
