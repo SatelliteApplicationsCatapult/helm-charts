@@ -32,7 +32,8 @@ jupyter:
   tolerations: []
   affinity: {}
 
+redisServiceHost: "redis-master"
+
 aws:
   accessKeyId: "AKIAIOSFODNN7INVALID"
   secretAccessKey: "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"
-
