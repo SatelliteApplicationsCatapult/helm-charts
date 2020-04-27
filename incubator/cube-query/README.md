@@ -98,7 +98,7 @@ for the differences between ClusterIP, NodePort, and LoadBalancer.
 
 ### Installing the Chart - WIP
 
-It's then necessary to create a *values-ard.yaml* file specific to the Kubernetes cluster and the ARD workflow that is being deployed.\
+It's then necessary to create a *values-ard.yaml* file specific to the Kubernetes cluster and architecture in use.\
 For the full set of configurable options see [values.yaml](values.yaml).
 
 As example, for a development environment we might have:
