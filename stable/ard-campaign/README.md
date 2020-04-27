@@ -449,14 +449,4 @@ aws:
 ```
 
 ## TODO
-- Add an option (e.g. `worker.job.ttl`) to set `ttlSecondsAfterFinished` for the Worker's Job, in order to clean up finished Jobs. If defined such an option would then be populated within the [worker-job.yaml](templates/worker-job.yaml) template as per below:
-    ```
-    spec:
-    {{- if .Values.worker.job.ttl }}
-      ttlSecondsAfterFinished: {{ .Values.worker.job.ttl }}
-    {{- end }}
-      template:
-        ...
-    ```
-    For reference, check [this implementation](https://github.com/SatelliteApplicationsCatapult/helm-charts/blob/master/stable/odc-product-generation/templates/deployment.yaml#L9).
 - Although as not critical as AWS keys, should we use a Kubernetes `Secret` for ASF and Copernicus Hub access details?
