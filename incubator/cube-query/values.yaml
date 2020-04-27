@@ -1,0 +1,37 @@
+# Default values for cube-query.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+server:
+  enabled: true
+  image:
+    repository: "satapps/cubequery-server"
+    tag: "1.0.0"
+    pullPolicy: IfNotPresent
+  imagePullSecrets: []
+  service:
+    type: LoadBalancer
+    port: 5000
+  replicaCount: 1
+  resources: {}
+  env: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+worker:
+  image:
+    repository: "satapps/cubequery-worker"
+    tag: "1.0.0"
+    pullPolicy: IfNotPresent
+  imagePullSecrets: []
+  parallelism: 3
+  resources: {}
+  env: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+aws:
+  accessKeyId: "AKIAIOSFODNN7INVALID"
+  secretAccessKey: "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"

@@ -1,0 +1,19 @@
+{{ if .Values.server.enabled -}}
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "cube-query.fullname" . }}-test-server-connection"
+  labels:
+{{ include "cube-query.labels" . | indent 4 }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args:  ['{{ include "cube-query.fullname" . }}-server:{{ .Values.server.service.port }}']
+  restartPolicy: Never
+
+{{- end }}
