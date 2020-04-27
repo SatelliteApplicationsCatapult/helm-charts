@@ -6,8 +6,8 @@ metadata:
 {{ include "ard-campaign.labels" . | indent 4 }}
 spec:
   parallelism: {{ .Values.worker.parallelism }}
-{{- with .Values.ttlSeconds }}
-  ttlSecondsAfterFinished: {{ .Values.ttlSeconds }}
+{{- with .Values.worker.ttlSeconds }}
+  ttlSecondsAfterFinished: {{ .Values.worker.ttlSeconds }}
 {{- end }}
   template:
     metadata:
