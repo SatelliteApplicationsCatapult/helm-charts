@@ -1,3 +1,5 @@
+{{- with .Values.server.extraConfig.usersConf }}
+
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -6,5 +8,6 @@ metadata:
 {{ include "cube-query.labels" . | indent 4 }}
 data:
   users.cfg: |
-    # User, password hash (bcrypt), allowed addresses
-    basic,$2b$12$LJxr6ilLLg.wSfiFGLp1w.s1A6H23z/6oV6qlcA/4..HoZNjMi/Uy,127.0.0.1;10.*
+    {{- toYaml . | nindent 4 }}
+
+{{- end }}
