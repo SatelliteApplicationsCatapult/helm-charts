@@ -175,6 +175,8 @@ jupyter:
   env:
     - name: AWS_NO_SIGN_REQUEST
       value: "YES"
+    - name: AWS_S3_ENDPOINT_URL
+      value: "http://s3-uk-1.sa-catapult.co.uk"
 ```
 
 For a production environment, we might have instead:
@@ -188,6 +190,8 @@ worker:
   env:
     - name: LOGLEVEL
       value: "ERROR"
+    - name: AWS_S3_ENDPOINT_URL
+      value: "http://s3-uk-1.sa-catapult.co.uk"
   affinity:
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
@@ -329,6 +333,8 @@ worker:
   env:
     - name: LOGLEVEL
       value: "ERROR"
+    - name: AWS_S3_ENDPOINT_URL
+      value: "http://s3-uk-1.sa-catapult.co.uk"
   affinity:
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
@@ -369,6 +375,8 @@ worker:
   env:
     - name: LOGLEVEL
       value: "ERROR"
+    - name: AWS_S3_ENDPOINT_URL
+      value: "http://s3-uk-1.sa-catapult.co.uk"
     - name: ASF_USERNAME
       value: "invalidusername"
     - name: ASF_PWD
@@ -427,6 +435,8 @@ worker:
   env:
     - name: LOGLEVEL
       value: "ERROR"
+    - name: AWS_S3_ENDPOINT_URL
+      value: "http://s3-uk-1.sa-catapult.co.uk"
   affinity:
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
