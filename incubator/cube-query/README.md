@@ -104,27 +104,41 @@ For the full set of configurable options see [values.yaml](values.yaml).
 As example, for a development environment we might have:
 
 ```yaml
-worker:
+server:
   env:
+    - name: APP_DEBUG
+      value: "True"
+    - name: APP_RESULT_DIR
+      value: "/data/"
+
+worker:
+  replicaCount: 1
+  env:
+    - name: APP_DEBUG
+      value: "True"
+    - name: APP_RESULT_DIR
+      value: "/data/"
     - name: AWS_NO_SIGN_REQUEST
       value: "YES"
     - name: AWS_VIRTUAL_HOSTING
       value: "FALSE"
     - name: AWS_S3_ENDPOINT
-      value: s3-uk-1.sa-catapult.co.uk
-
-server:
-  env:
-    - name: APP_DEBUG
-      value: "true"
+      value: "s3-uk-1.sa-catapult.co.uk"
 ```
 
 For a production environment, we might have instead:
 
 ```yaml
+server:
+  env:
+    - name: APP_RESULT_DIR
+      value: "/data/"
+
 worker:
   replicaCount: 7
   env:
+    - name: APP_RESULT_DIR
+      value: "/data/"
     - name: AWS_VIRTUAL_HOSTING
       value: "FALSE"
     - name: AWS_S3_ENDPOINT
