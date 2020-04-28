@@ -159,8 +159,6 @@ image:
 env:
   - name: PYTHONUNBUFFERED
     value: "0"
-  - name: AWS_VIRTUAL_HOSTING
-    value: "FALSE"
   - name: AWS_S3_ENDPOINT_URL
     value: "http://s3-uk-1.sa-catapult.co.uk"
 
