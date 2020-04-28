@@ -1,4 +1,4 @@
-{{- with .Values.server.extraConfig.usersConf }}
+{{- with .Values.server.usersConf }}
 
 apiVersion: v1
 kind: ConfigMap

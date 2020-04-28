@@ -28,7 +28,7 @@ spec:
           imagePullPolicy: {{ .Values.server.image.pullPolicy }}
           resources:
             {{- toYaml .Values.server.resources | nindent 12 }}
-        {{- if .Values.server.extraConfig.usersConf }}
+        {{- if .Values.server.usersConf }}
           volumeMounts:
             - mountPath: /app/users.cfg
               name: users-conf
@@ -60,7 +60,7 @@ spec:
             {{- end }}
             {{- end }}
             {{- end }}
-    {{- if .Values.server.extraConfig.usersConf }}
+    {{- if .Values.server.usersConf }}
       volumes:
         - configMap:
             defaultMode: 0755

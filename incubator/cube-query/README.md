@@ -130,10 +130,9 @@ For a production environment, we might have instead:
 
 ```yaml
 server:
-  extraConfig:
-    usersConf: |
-      # User, password hash (bcrypt), allowed addresses
-      basic,$2b$12$LJxr6ilLLg.wSfiFGLp1w.s1A6H23z/6oV6qlcA/4..HoZNjMi/Uy,127.0.0.1;10.*
+  usersConf: |
+    # User, password hash (bcrypt), allowed addresses
+    basic,$2b$12$LJxr6ilLLg.wSfiFGLp1w.s1A6H23z/6oV6qlcA/4..HoZNjMi/Uy,127.0.0.1;10.*
   env:
     - name: APP_RESULT_DIR
       value: "/data/"
