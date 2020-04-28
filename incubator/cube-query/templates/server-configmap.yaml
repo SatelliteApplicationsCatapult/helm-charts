@@ -1,4 +1,4 @@
-{{- with .Values.server.usersConf }}
+{{- if .Values.server.usersConf }}
 
 apiVersion: v1
 kind: ConfigMap
@@ -8,6 +8,6 @@ metadata:
 {{ include "cube-query.labels" . | indent 4 }}
 data:
   users.cfg: |
-    {{- toYaml . | nindent 4 }}
+    {{- .Values.server.usersConf | nindent 4 }}
 
 {{- end }}
