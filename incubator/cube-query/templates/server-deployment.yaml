@@ -28,6 +28,10 @@ spec:
           imagePullPolicy: {{ .Values.server.image.pullPolicy }}
           resources:
             {{- toYaml .Values.server.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /app/users.cfg
+              name: users-conf
+              subPath: users.cfg
           env:
             - name: REDIS_URL
               value: "redis://{{ .Values.redisServiceHost }}:6379/"
@@ -54,6 +58,11 @@ spec:
             {{- end }}
             {{- end }}
             {{- end }}
+      volumes:
+        - configMap:
+            defaultMode: 0755
+            name: users-conf
+          name: users-conf
     {{- with .Values.server.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
