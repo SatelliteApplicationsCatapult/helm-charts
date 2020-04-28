@@ -5,7 +5,7 @@ To learn more about the release, try:
   $ helm status {{ .Release.Name }}  # information about running pods and this message
   $ helm get {{ .Release.Name }}     # get full Kubernetes specification
 
-This release includes {{ .Values.worker.parallelism }} workers, and 1 server.
+This release includes {{ .Values.worker.replicaCount }} workers, and 1 server.
 
 The server exposes an external service to which you can connect to interact with.
 You can get the relevant address by running the following:
