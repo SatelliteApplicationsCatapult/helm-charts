@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: datacube-conf
   labels:
-{{ include "odc-product-generation.labels" . | indent 4 }}
+{{ include "cube-query.labels" . | indent 4 }}
 data:
   datacube.conf: |
     [datacube]
