@@ -174,7 +174,7 @@ RELEASEODCPROD=geomedian
 
 helm upgrade --install $RELEASEODCPROD satapps/odc-product-generation \
   --namespace $NAMESPACEODCPROD \
-  --version 0.1.0 \
+  --version 0.3.0 \
   --values values-worker.yaml
 ```
 
