@@ -429,7 +429,7 @@ Configuration options would be along these lines for a production system:
 ```yaml
 worker:
   image:
-    repository: "satapps/ard-workflow-s2"
+    repository: "satapps/ard-workflow-s2-l1c"
     tag: "1.2.2"
   parallelism: 14
   env:
