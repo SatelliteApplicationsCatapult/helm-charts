@@ -370,7 +370,7 @@ Configuration options would be along these lines for a production system:
 worker:
   image:
     repository: "satapps/ard-workflow-s1"
-    tag: "1.2.1"
+    tag: "1.2.3"
   parallelism: 14
   env:
     - name: LOGLEVEL
@@ -395,6 +395,50 @@ worker:
       value: "/utils/cs_s1_pt4A_Sm_Bm_TC_lsm.xml"
     - name: SNAP_GPT
       value: "/opt/snap/bin/gpt"
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: component
+              operator: In
+              values:
+              - worker
+          topologyKey: "kubernetes.io/hostname"
+
+jupyter:
+  enabled: false
+
+aws:
+  accessKeyId: "AKIAIOSFODNN7INVALID"
+  secretAccessKey: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYINVALIDKEY"
+```
+
+### Sentinel-2 L1C to L2A preparation
+
+For Sentinel-2 L1C to L2A preparation, jobs are defined as per example below:
+
+```bash
+rpush jobS2 '{"in_scene": "S2A_MSIL1C_20190524T221941_N0207_R029_T60KXD_20190524T234151", "s3_bucket": "public-eo-data", "s3_dir": "common_sensing/fiji/sentinel_2/"}'
+```
+
+Configuration options would be along these lines for a production system:
+
+```yaml
+worker:
+  image:
+    repository: "satapps/ard-workflow-s2"
+    tag: "1.2.2"
+  parallelism: 14
+  env:
+    - name: LOGLEVEL
+      value: "ERROR"
+    - name: AWS_S3_ENDPOINT_URL
+      value: "http://s3-uk-1.sa-catapult.co.uk"
+    - name: SEN2COR_8
+      value: "/Sen2Cor-02.08.00-Linux64/bin/L2A_Process"
   affinity:
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
