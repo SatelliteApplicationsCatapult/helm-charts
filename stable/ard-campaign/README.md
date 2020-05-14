@@ -107,10 +107,10 @@ $ kubectl run --namespace $NAMESPACE redis-client --rm --tty -i --restart='Never
 
 I have no name!@redis-client:/$ redis-cli -h redis-master
 
-redis-master:6379> rpush jobS2 '{"in_scene": "S2A_MSIL2A_20190812T235741_N0213_R030_T56LRR_20190813T014708", "s3_bucket": "pds-satapps", "s3_dir": "fiji/Sentinel_2/"}'
+redis-master:6379> rpush jobS2 '{"in_scene": "S2A_MSIL2A_20190812T235741_N0213_R030_T56LRR_20190813T014708", "s3_bucket": "public-eo-data", "s3_dir": "fiji/Sentinel_2/"}'
 (integer) 1
 redis-master:6379> lrange jobS2 0 -1
-1) "{\"in_scene\": \"S2A_MSIL2A_20190812T235741_N0213_R030_T56LRR_20190813T014708\", \"s3_bucket\": \"pds-satapps\", \"s3_dir\": \"fiji/Sentinel_2/\"}"
+1) "{\"in_scene\": \"S2A_MSIL2A_20190812T235741_N0213_R030_T56LRR_20190813T014708\", \"s3_bucket\": \"public-eo-data\", \"s3_dir\": \"fiji/Sentinel_2/\"}"
 ```
 
 For [mass insertion](https://redis.io/topics/mass-insert) you can use e.g.:
@@ -120,7 +120,7 @@ $ kubectl run --namespace $NAMESPACE redis-client --rm --tty -i --restart='Never
   --image docker.io/bitnami/redis:5.0.5-debian-9-r104 -- bash
 
 I have no name!@redis-client:/$ cat <<EOF | redis-cli -h redis-master --pipe
-rpush jobS2 '{"in_scene": "S2A_MSIL2A_20190812T235741_N0213_R030_T56LRR_20190813T014708", "s3_bucket": "pds-satapps", "s3_dir": "fiji/Sentinel_2/"}'
+rpush jobS2 '{"in_scene": "S2A_MSIL2A_20190812T235741_N0213_R030_T56LRR_20190813T014708", "s3_bucket": "public-eo-data", "s3_dir": "fiji/Sentinel_2/"}'
 ...
 EOF
 ```
@@ -319,7 +319,7 @@ kubectl delete namespace $NAMESPACE
 For Landsat 4, 5, 7, and 8, jobs are defined as per example below:
 
 ```bash
-rpush jobLS '{"in_scene": "https://edclpdsftp.cr.usgs.gov/orders/espa-User.Name@Domain-12202019-045818-299/LT040900641989052601T2-SC20191220121726.tar.gz", "s3_bucket": "pds-satapps", "s3_dir": "solomonislands/landsat_4/"}'
+rpush jobLS '{"in_scene": "https://edclpdsftp.cr.usgs.gov/orders/espa-User.Name@Domain-12202019-045818-299/LT040900641989052601T2-SC20191220121726.tar.gz", "s3_bucket": "public-eo-data", "s3_dir": "solomonislands/landsat_4/"}'
 ```
 
 Configuration options would be along these lines for a production system:
@@ -361,7 +361,7 @@ aws:
 For Sentinel-1, jobs are defined as per example below:
 
 ```bash
-rpush jobS1 '{"in_scene": "S1A_IW_GRDH_1SDV_20200210T064005_20200210T064040_031186_0395FE_3FBF", "s3_bucket": "pds-satapps", "s3_dir": "fiji/sentinel_1/", "ext_dem": "ancillary_products/SRTM1Sec/SRTM30_Fiji_E.tif"}'
+rpush jobS1 '{"in_scene": "S1A_IW_GRDH_1SDV_20200210T064005_20200210T064040_031186_0395FE_3FBF", "s3_bucket": "public-eo-data", "s3_dir": "fiji/sentinel_1/", "ext_dem": "ancillary_products/SRTM1Sec/SRTM30_Fiji_E.tif"}'
 ```
 
 Configuration options would be along these lines for a production system:
@@ -421,7 +421,7 @@ aws:
 For Sentinel-2 L1C to L2A preparation, jobs are defined as per example below:
 
 ```bash
-rpush jobS2 '{"in_scene": "S2A_MSIL1C_20190524T221941_N0207_R029_T60KXD_20190524T234151", "s3_bucket": "public-eo-data", "s3_dir": "common_sensing/fiji/sentinel_2/"}'
+rpush jobS2 '{"in_scene": "S2A_MSIL1C_20190524T221941_N0207_R029_T60KXD_20190524T234151", "s3_bucket": "public-eo-data", "s3_dir": "fiji/sentinel_2/"}'
 ```
 
 Configuration options would be along these lines for a production system:
@@ -465,7 +465,7 @@ aws:
 For water classification products, jobs are defined as per example below:
 
 ```bash
-rpush jobWater '{"optical_yaml_path": "fiji/landsat_8/LC08_L1TP_072069_20130522/datacube-metadata.yaml", "s3_bucket": "pds-satapps", "s3_dir": "fiji/landsat_8_water/"}'
+rpush jobWater '{"optical_yaml_path": "fiji/landsat_8/LC08_L1TP_072069_20130522/datacube-metadata.yaml", "s3_bucket": "public-eo-data", "s3_dir": "fiji/landsat_8_water/"}'
 ```
 
 Configuration options would be along these lines for a production system:
