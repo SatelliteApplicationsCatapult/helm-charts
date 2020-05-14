@@ -504,3 +504,4 @@ aws:
 
 ## TODO
 - Although as not critical as AWS keys, should we use a Kubernetes `Secret` for ASF and Copernicus Hub access details?
+- We could include an optional [job insert](https://github.com/SatelliteApplicationsCatapult/ard-docker-images/tree/master/job-insert) worker in the deployment.
