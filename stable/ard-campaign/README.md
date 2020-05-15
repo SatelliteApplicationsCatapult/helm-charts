@@ -430,7 +430,7 @@ Configuration options would be along these lines for a production system:
 worker:
   image:
     repository: "satapps/ard-workflow-s2-l1c"
-    tag: "1.2.2"
+    tag: "1.2.4"
   parallelism: 14
   env:
     - name: LOGLEVEL
