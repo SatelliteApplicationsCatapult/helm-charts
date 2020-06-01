@@ -243,3 +243,7 @@ helm delete $RELEASEREDIS --purge
 helm delete $RELEASEODCPROD --purge
 kubectl delete namespace $NAMESPACEODCPROD
 ```
+
+## TODO
+
+- Add a liveness probe
