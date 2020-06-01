@@ -15,7 +15,17 @@ spec:
         app.kubernetes.io/name: {{ include "odc-product-generation.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-      restartPolicy: Never
+      restartPolicy: OnFailure
+      livenessProbe:
+        exec:
+          command:
+            - test
+            - $(stat -c %Y /tmp/healthy) -gt $(($(date +%s) - 1800))
+        initialDelaySeconds: 30
+        periodSeconds: 60
+        timeoutSeconds: 1
+        successThreshold: 1
+        failureThreshold: 3
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
