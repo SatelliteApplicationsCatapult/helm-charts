@@ -16,16 +16,6 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       restartPolicy: OnFailure
-      livenessProbe:
-        exec:
-          command:
-            - test
-            - $(stat -c %Y /tmp/healthy) -gt $(($(date +%s) - 1800))
-        initialDelaySeconds: 30
-        periodSeconds: 60
-        timeoutSeconds: 1
-        successThreshold: 1
-        failureThreshold: 3
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -75,6 +65,16 @@ spec:
             {{- end }}
             {{- end }}
             {{- end }}
+          livenessProbe:
+            exec:
+              command:
+                - test
+                - $(stat -c %Y /tmp/healthy) -gt $(($(date +%s) - 1800))
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 3
       volumes:
         - configMap:
             defaultMode: 420
