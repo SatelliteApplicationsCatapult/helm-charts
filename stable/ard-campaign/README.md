@@ -150,7 +150,7 @@ helm repo update
 
 helm search ard-campaign
 NAME                    CHART VERSION   APP VERSION     DESCRIPTION
-satapps/ard-campaign    0.5.0           1.2.1           A Helm chart for deploying ARD processing campaigns with ...
+satapps/ard-campaign    0.6.0           1.2.1           A Helm chart for deploying ARD processing campaigns with ...
 ```
 
 It's then necessary to create a *values-ard.yaml* file specific to the Kubernetes cluster and the ARD workflow that is being deployed.\
@@ -162,7 +162,7 @@ As example, for a development environment we might have:
 worker:
   image:
     repository: "satapps/ard-workflow-s2"
-    tag: "1.2.1"
+    tag: "1.2.2"
   parallelism: 1
   env:
     - name: AWS_NO_SIGN_REQUEST
@@ -177,6 +177,10 @@ jupyter:
       value: "YES"
     - name: AWS_S3_ENDPOINT_URL
       value: "http://s3-uk-1.sa-catapult.co.uk"
+
+gcp:
+  privateKey: "-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----"
+  clientEmail: "invalid@invalid.iam.gserviceaccount.com"
 ```
 
 For a production environment, we might have instead:
@@ -207,6 +211,10 @@ worker:
 
 jupyter:
   enabled: false
+
+gcp:
+  privateKey: "-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----"
+  clientEmail: "invalid@invalid.iam.gserviceaccount.com"
 
 aws:
   accessKeyId: "AKIAIOSFODNN7INVALID"
@@ -264,6 +272,13 @@ The following tables list the configurable parameters of the Chart and their def
 | `jupyter.tolerations`      | Tolerations                     | `[]`                              |
 | `jupyter.nodeSelector`     | nodeSelector                    | `{}`                              |
 | `jupyter.affinity`         | Container affinity              | `{}`                              |
+
+### GCP
+
+| Parameter         | Description      | Default                                                         |
+|-------------------|------------------|-----------------------------------------------------------------|
+| `gcp.privateKey`  | GCP private key  | `-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----` |
+| `gcp.clientEmail` | GCP client email | `invalid@invalid.iam.gserviceaccount.com`                       |
 
 ### AWS
 
