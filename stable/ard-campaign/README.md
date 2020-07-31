@@ -228,7 +228,7 @@ RELEASEARD=s2job
 
 helm upgrade --install $RELEASEARD satapps/ard-campaign \
   --namespace $NAMESPACE \
-  --version 0.5.0 \
+  --version 0.6.0 \
   --values values-ard.yaml
 ```
 
