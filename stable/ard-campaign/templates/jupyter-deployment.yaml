@@ -41,6 +41,16 @@ spec:
                 secretKeyRef:
                   name: {{ include "ard-campaign.fullname" . }}
                   key: aws_secret_access_key
+            - name: GCP_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ard-campaign.fullname" . }}
+                  key: gcp_private_key
+            - name: GCP_CLIENT_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ard-campaign.fullname" . }}
+                  key: gcp_client_email
             {{- if .Values.jupyter.env }}
             {{- $extraEnvType := typeOf .Values.jupyter.env }}
             {{- /* If we have a list, embed that here directly. This allows for complex configuration from configmap, downward API, etc. */}}

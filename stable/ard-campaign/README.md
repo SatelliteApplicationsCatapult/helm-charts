@@ -430,7 +430,7 @@ Configuration options would be along these lines for a production system:
 worker:
   image:
     repository: "satapps/ard-workflow-s2-l1c"
-    tag: "1.2.4"
+    tag: "1.2.5"
   parallelism: 14
   env:
     - name: LOGLEVEL
@@ -439,6 +439,10 @@ worker:
       value: "http://s3-uk-1.sa-catapult.co.uk"
     - name: SEN2COR_8
       value: "/Sen2Cor-02.08.00-Linux64/bin/L2A_Process"
+    - name: COPERNICUS_USERNAME
+      value: "invalidusername"
+    - name: COPERNICUS_PWD
+      value: "invalidpassword"
   affinity:
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
@@ -454,6 +458,12 @@ worker:
 
 jupyter:
   enabled: false
+
+gcp:
+  privateKey: |-
+    -----BEGIN PRIVATE KEY-----
+    -----END PRIVATE KEY-----
+  clientEmail: "invalid@invalid.iam.gserviceaccount.com"
 
 aws:
   accessKeyId: "AKIAIOSFODNN7INVALID"
