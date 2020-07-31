@@ -34,6 +34,10 @@ jupyter:
 
 redisServiceHost: "redis-master"
 
+gcp:
+  privateKey: "-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----"
+  clientEmail: "invalid@nvalid.iam.gserviceaccount.com"
+
 aws:
   accessKeyId: "AKIAIOSFODNN7INVALID"
   secretAccessKey: "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"
