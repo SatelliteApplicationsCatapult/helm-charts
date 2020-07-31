@@ -35,9 +35,7 @@ jupyter:
 redisServiceHost: "redis-master"
 
 gcp:
-  privateKey: |-
-    -----BEGIN PRIVATE KEY-----
-    -----END PRIVATE KEY-----
+  privateKey: "-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----"
   clientEmail: "invalid@nvalid.iam.gserviceaccount.com"
 
 aws:
