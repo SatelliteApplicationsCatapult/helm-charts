@@ -31,16 +31,26 @@ spec:
           resources:
             {{- toYaml .Values.jupyter.resources | nindent 12 }}
           env:
-            - name: AWS_ACCESS_KEY_ID
+            - name: ASF_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: {{ include "ard-campaign.fullname" . }}
-                  key: aws_access_key_id
-            - name: AWS_SECRET_ACCESS_KEY
+                  key: asf_username
+            - name: ASF_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ include "ard-campaign.fullname" . }}
-                  key: aws_secret_access_key
+                  key: asf_password
+            - name: COPERNICUS_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ard-campaign.fullname" . }}
+                  key: copernicus_username
+            - name: COPERNICUS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ard-campaign.fullname" . }}
+                  key: copernicus_password
             - name: GCP_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:
@@ -51,6 +61,16 @@ spec:
                 secretKeyRef:
                   name: {{ include "ard-campaign.fullname" . }}
                   key: gcp_client_email
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ard-campaign.fullname" . }}
+                  key: aws_access_key_id
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ard-campaign.fullname" . }}
+                  key: aws_secret_access_key
             {{- if .Values.jupyter.env }}
             {{- $extraEnvType := typeOf .Values.jupyter.env }}
             {{- /* If we have a list, embed that here directly. This allows for complex configuration from configmap, downward API, etc. */}}

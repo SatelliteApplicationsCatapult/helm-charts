@@ -150,7 +150,7 @@ helm repo update
 
 helm search ard-campaign
 NAME                    CHART VERSION   APP VERSION     DESCRIPTION
-satapps/ard-campaign    0.6.0           1.2.2           A Helm chart for deploying ARD processing campaigns with ...
+satapps/ard-campaign    0.7.0           1.2.2           A Helm chart for deploying ARD processing campaigns with ...
 ```
 
 It's then necessary to create a *values-ard.yaml* file specific to the Kubernetes cluster and the ARD workflow that is being deployed.\
@@ -228,7 +228,7 @@ RELEASEARD=s2job
 
 helm upgrade --install $RELEASEARD satapps/ard-campaign \
   --namespace $NAMESPACE \
-  --version 0.6.0 \
+  --version 0.7.0 \
   --values values-ard.yaml
 ```
 
@@ -272,6 +272,20 @@ The following tables list the configurable parameters of the Chart and their def
 | `jupyter.tolerations`      | Tolerations                     | `[]`                              |
 | `jupyter.nodeSelector`     | nodeSelector                    | `{}`                              |
 | `jupyter.affinity`         | Container affinity              | `{}`                              |
+
+### ASF
+
+| Parameter      | Description     | Default           |
+|----------------|-----------------|-------------------|
+| `asf.username` | ASF login name  | `invalidusername` |
+| `asf.password` | ASF password    | `invalidpassword` |
+
+### Copernicus Hub
+
+| Parameter             | Description                | Default           |
+|-----------------------|----------------------------|-------------------|
+| `copernicus.username` | Copernicus Hub login name  | `invalidusername` |
+| `copernicus.password` | Copernicus Hub password    | `invalidpassword` |
 
 ### GCP
 
@@ -392,14 +406,6 @@ worker:
       value: "ERROR"
     - name: AWS_S3_ENDPOINT_URL
       value: "http://s3-uk-1.sa-catapult.co.uk"
-    - name: ASF_USERNAME
-      value: "invalidusername"
-    - name: ASF_PWD
-      value: "invalidpassword"
-    - name: COPERNICUS_USERNAME
-      value: "invalidusername"
-    - name: COPERNICUS_PWD
-      value: "invalidpassword"
     - name: S1_PROCESS_P1A
       value: "/utils/cs_s1_pt1_bnr_Orb_Cal_ML.xml"
     - name: S1_PROCESS_P2A
@@ -425,6 +431,14 @@ worker:
 
 jupyter:
   enabled: false
+
+asf:
+  username: "invaliduser"
+  password: "invalidpassword"
+
+copernicus:
+  username: "invaliduser"
+  password: "invalidpassword"
 
 aws:
   accessKeyId: "AKIAIOSFODNN7INVALID"
@@ -454,10 +468,6 @@ worker:
       value: "http://s3-uk-1.sa-catapult.co.uk"
     - name: SEN2COR_8
       value: "/Sen2Cor-02.08.00-Linux64/bin/L2A_Process"
-    - name: COPERNICUS_USERNAME
-      value: "invalidusername"
-    - name: COPERNICUS_PWD
-      value: "invalidpassword"
   affinity:
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
@@ -473,6 +483,10 @@ worker:
 
 jupyter:
   enabled: false
+
+copernicus:
+  username: "invaliduser"
+  password: "invalidpassword"
 
 gcp:
   privateKey: "-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----"
@@ -526,5 +540,4 @@ aws:
 ```
 
 ## TODO
-- Although as not critical as AWS keys, should we use a Kubernetes `Secret` for ASF and Copernicus Hub access details?
 - We could include an optional [job insert](https://github.com/SatelliteApplicationsCatapult/ard-docker-images/tree/master/job-insert) worker in the deployment.
