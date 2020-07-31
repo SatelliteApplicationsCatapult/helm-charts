@@ -460,9 +460,7 @@ jupyter:
   enabled: false
 
 gcp:
-  privateKey: |-
-    -----BEGIN PRIVATE KEY-----
-    -----END PRIVATE KEY-----
+  privateKey: "-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----"
   clientEmail: "invalid@invalid.iam.gserviceaccount.com"
 
 aws:
