@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "cube-query.fullname" . }}-server
+  name: {{ include "cube-query.fullname" . }}
   labels:
 {{ include "cube-query.labels" . | indent 4 }}
 spec:
@@ -12,5 +12,6 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app.kubernetes.io/name: {{ include "cube-query.name" . }}-server
-    app.kubernetes.io/instance: {{ .Release.Name }}-server
+    app.kubernetes.io/name: {{ include "cube-query.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    component: server
