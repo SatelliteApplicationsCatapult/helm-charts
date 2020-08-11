@@ -33,15 +33,6 @@ master:
   ##
   persistence:
     enabled: false
-
-## Redis config file
-## ref: https://redis.io/topics/config
-##
-configmap: |-
-  # Enable AOF https://redis.io/topics/persistence#append-only-file
-  appendonly yes
-  # Disable RDB persistence, AOF persistence already enabled.
-  save ""
 ```
 
 For a production environment, we might have instead:
