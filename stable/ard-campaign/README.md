@@ -57,7 +57,7 @@ master:
     size: "1Gi"
 ```
 
-For the full set of configurable options see [values.yaml](https://github.com/helm/charts/blob/master/stable/redis/values.yaml).
+For the full set of configurable options see [values.yaml](https://github.com/bitnami/charts/blob/master/bitnami/redis/values.yaml).
 
 In order to deploy the Master issue the following:
 
