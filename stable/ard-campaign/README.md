@@ -49,7 +49,7 @@ For a production environment, we might have instead:
 ```yaml
 ## Cluster settings
 cluster:
-  enabled: true
+  enabled: false
 
 ## Use password authentication
 usePassword: false
@@ -62,18 +62,8 @@ master:
   ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
   ##
   persistence:
-    enabled: true
     storageClass: "fast"
     size: "1Gi"
-
-## Redis config file
-## ref: https://redis.io/topics/config
-##
-configmap: |-
-  # Enable AOF https://redis.io/topics/persistence#append-only-file
-  appendonly yes
-  # Disable RDB persistence, AOF persistence already enabled.
-  save ""
 ```
 
 For the full set of configurable options see [values.yaml](https://github.com/helm/charts/blob/master/stable/redis/values.yaml).
@@ -81,13 +71,18 @@ For the full set of configurable options see [values.yaml](https://github.com/he
 In order to deploy the Master issue the following:
 
 ```bash
-NAMESPACE=ard
+NAMESPACEARD=ard
+
+kubectl create namespace $NAMESPACEARD
 
 RELEASEREDIS=redis
 
-helm upgrade --install $RELEASEREDIS stable/redis \
-  --namespace $NAMESPACE \
-  --version 9.1.3 \
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo update
+
+helm upgrade --install $RELEASEREDIS bitnami/redis \
+  --namespace $NAMESPACEARD \
+  --version 10.7.16 \
   --values values-redis.yaml
 ```
 
@@ -102,7 +97,7 @@ For all available missions and products see the [relevant section](https://githu
 The list with key `jobS2` is the work queue for Sentinel-2 ARD work items. Insert items with e.g.:
 
 ```bash
-$ kubectl run --namespace $NAMESPACE redis-client --rm --tty -i --restart='Never' \
+$ kubectl run --namespace $NAMESPACEARD redis-client --rm --tty -i --restart='Never' \
   --image docker.io/bitnami/redis:5.0.5-debian-9-r104 -- bash
 
 I have no name!@redis-client:/$ redis-cli -h redis-master
@@ -116,7 +111,7 @@ redis-master:6379> lrange jobS2 0 -1
 For [mass insertion](https://redis.io/topics/mass-insert) you can use e.g.:
 
 ```bash
-$ kubectl run --namespace $NAMESPACE redis-client --rm --tty -i --restart='Never' \
+$ kubectl run --namespace $NAMESPACEARD redis-client --rm --tty -i --restart='Never' \
   --image docker.io/bitnami/redis:5.0.5-debian-9-r104 -- bash
 
 I have no name!@redis-client:/$ cat <<EOF | redis-cli -h redis-master --pipe
@@ -227,7 +222,7 @@ To install the Chart with the release name `s2job`:
 RELEASEARD=s2job
 
 helm upgrade --install $RELEASEARD satapps/ard-campaign \
-  --namespace $NAMESPACE \
+  --namespace $NAMESPACEARD \
   --version 0.7.0 \
   --values values-ard.yaml
 ```
@@ -306,7 +301,7 @@ The following tables list the configurable parameters of the Chart and their def
 A `Job` can be inspected for completion, e.g. by issuing:
 
 ```bash
-$ kubectl get job -n $NAMESPACE -o wide
+$ kubectl get job -n $NAMESPACEARD -o wide
 NAME                        COMPLETIONS   DURATION   AGE   CONTAINERS     IMAGES                          SELECTOR
 s2job-ard-campaign-worker   3/1 of 3      100m       28h   ard-campaign   satapps/ard-workflow-s2:1.2.2   controller-uid=302c9874-0e24-4977-9360-bc8cfc76df96
 ```
@@ -314,7 +309,7 @@ s2job-ard-campaign-worker   3/1 of 3      100m       28h   ard-campaign   satapp
 Alternatively, making sure that the relevant `Pod`s are in the `Completed` status is another possible route. E.g.:
 
 ```bash
-$ kubectl get pod -n $NAMESPACE -l component=worker -o wide
+$ kubectl get pod -n $NAMESPACEARD -l component=worker -o wide
 NAME                              READY   STATUS      RESTARTS   AGE   IP             NODE        NOMINATED NODE   READINESS GATES
 s2job-ard-campaign-worker-fsd27   0/1     Completed   0          28h   10.244.2.129   k8snode02   <none>           <none>
 s2job-ard-campaign-worker-gltrk   0/1     Completed   0          28h   10.244.3.114   k8snode03   <none>           <none>
@@ -326,7 +321,7 @@ s2job-ard-campaign-worker-jnsfl   0/1     Completed   0          28h   10.244.1.
 In order to extract the logs from all workers, issue:
 
 ```bash
-for pod in $(kubectl get pods -n $NAMESPACE -l component=worker -o name); do kubectl logs $pod -n $NAMESPACE; done
+for pod in $(kubectl get pods -n $NAMESPACEARD -l component=worker -o name); do kubectl logs $pod -n $NAMESPACEARD; done
 ```
 
 ## Cleaning up
@@ -336,9 +331,9 @@ for pod in $(kubectl get pods -n $NAMESPACE -l component=worker -o name); do kub
 If you wish to undo changes to your Kubernetes cluster, simply issue the following commands:
 
 ```bash
-helm delete $RELEASEREDIS --purge
-helm delete $RELEASEARD --purge
-kubectl delete namespace $NAMESPACE
+helm delete $RELEASEREDIS -n $NAMESPACEARD
+helm delete $RELEASEARD -n $NAMESPACEARD
+kubectl delete namespace $NAMESPACEARD
 ```
 
 ## Other missions and products
