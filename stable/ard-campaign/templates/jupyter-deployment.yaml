@@ -36,7 +36,7 @@ spec:
                 secretKeyRef:
                   name: {{ include "ard-campaign.fullname" . }}
                   key: asf_username
-            - name: ASF_PASSWORD
+            - name: ASF_PWD
               valueFrom:
                 secretKeyRef:
                   name: {{ include "ard-campaign.fullname" . }}
@@ -46,7 +46,7 @@ spec:
                 secretKeyRef:
                   name: {{ include "ard-campaign.fullname" . }}
                   key: copernicus_username
-            - name: COPERNICUS_PASSWORD
+            - name: COPERNICUS_PWD
               valueFrom:
                 secretKeyRef:
                   name: {{ include "ard-campaign.fullname" . }}
