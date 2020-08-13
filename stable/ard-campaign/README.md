@@ -533,5 +533,47 @@ aws:
   secretAccessKey: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYINVALIDKEY"
 ```
 
+### Water classification (ML-based)
+
+For water classification products, jobs are defined as per example below:
+
+```bash
+rpush jobMLWater '{"img_yml_path": "common_sensing/fiji/landsat_8/LC08_L1TP_073069_20150127/datacube-metadata.yaml", "lab_yml_path": "common_sensing/fiji/wofs_summary/wofssummary_20180101_20190101/datacube-metadata.yaml", "s3_bucket": "public-eo-data", "s3_dir": "fiji/mlwatermasks/"}'
+```
+
+Configuration options would be along these lines for a production system:
+
+```yaml
+worker:
+  image:
+    repository: "satapps/ard-workflow-ml-water-classification"
+    tag: "1.3.0"
+  parallelism: 7
+  env:
+    - name: LOGLEVEL
+      value: "ERROR"
+    - name: AWS_S3_ENDPOINT_URL
+      value: "http://s3-uk-1.sa-catapult.co.uk"
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: component
+              operator: In
+              values:
+              - worker
+          topologyKey: "kubernetes.io/hostname"
+
+jupyter:
+  enabled: false
+
+aws:
+  accessKeyId: "AKIAIOSFODNN7INVALID"
+  secretAccessKey: "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"
+```
+
 ## TODO
 - We could include an optional [job insert](https://github.com/SatelliteApplicationsCatapult/ard-docker-images/tree/master/job-insert) worker in the deployment.
