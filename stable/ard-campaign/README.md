@@ -136,7 +136,7 @@ helm repo update
 
 helm search ard-campaign
 NAME                    CHART VERSION   APP VERSION     DESCRIPTION
-satapps/ard-campaign    0.7.0           1.2.2           A Helm chart for deploying ARD processing campaigns with ...
+satapps/ard-campaign    0.8.1           1.3.0           A Helm chart for deploying ARD processing campaigns with ...
 ```
 
 It's then necessary to create a *values-ard.yaml* file specific to the Kubernetes cluster and the ARD workflow that is being deployed.\
@@ -148,7 +148,7 @@ As example, for a development environment we might have:
 worker:
   image:
     repository: "satapps/ard-workflow-s2"
-    tag: "1.2.2"
+    tag: "1.3.0"
   parallelism: 1
   env:
     - name: AWS_NO_SIGN_REQUEST
@@ -164,6 +164,10 @@ jupyter:
     - name: AWS_S3_ENDPOINT_URL
       value: "http://s3-uk-1.sa-catapult.co.uk"
 
+copernicus:
+  username: "invalidusername"
+  password: "invalidpassword"
+
 gcp:
   privateKey: "-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----"
   clientEmail: "invalid@invalid.iam.gserviceaccount.com"
@@ -175,7 +179,7 @@ For a production environment, we might have instead:
 worker:
   image:
     repository: "satapps/ard-workflow-s2"
-    tag: "1.2.2"
+    tag: "1.3.0"
   parallelism: 14
   env:
     - name: LOGLEVEL
@@ -198,6 +202,10 @@ worker:
 jupyter:
   enabled: false
 
+copernicus:
+  username: "invalidusername"
+  password: "invalidpassword"
+
 gcp:
   privateKey: "-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----"
   clientEmail: "invalid@invalid.iam.gserviceaccount.com"
@@ -214,7 +222,7 @@ RELEASEARD=s2job
 
 helm upgrade --install $RELEASEARD satapps/ard-campaign \
   --namespace $NAMESPACEARD \
-  --version 0.7.0 \
+  --version 0.8.1 \
   --values values-ard.yaml
 ```
 
@@ -233,7 +241,7 @@ The following tables list the configurable parameters of the Chart and their def
 | Parameter                 | Description                     | Default                   |
 | --------------------------| --------------------------------| --------------------------|
 | `worker.image.repository` | Container image name            | `satapps/ard-workflow-s2` |
-| `worker.image.tag`        | Container image tag             | `1.2.2`                   |
+| `worker.image.tag`        | Container image tag             | `1.3.0`                   |
 | `worker.image.pullPolicy` | Container image pull policy     | `IfNotPresent`            |
 | `worker.parallelism`      | k8s job parallelism             | `3`                       |
 | `worker.resources`        | Container resources             | `{}`                      |
@@ -248,7 +256,7 @@ The following tables list the configurable parameters of the Chart and their def
 |----------------------------|---------------------------------|-----------------------------------|
 | `jupyter.enabled`          | Include optional Jupyter server | `true`                            |
 | `jupyter.image.repository` | Container image name            | `satapps/ard-workflow-s2-jupyter` |
-| `jupyter.image.tag`        | Container image tag             | `1.2.2`                           |
+| `jupyter.image.tag`        | Container image tag             | `1.3.0`                           |
 | `jupyter.image.pullPolicy` | Container image pull policy     | `IfNotPresent`                    |
 | `jupyter.service.type`     | k8s service type                | `LoadBalancer`                    |
 | `jupyter.service.port`     | k8s service port                | `80`                              |
@@ -294,7 +302,7 @@ A `Job` can be inspected for completion, e.g. by issuing:
 ```bash
 $ kubectl get job -n $NAMESPACEARD -o wide
 NAME                        COMPLETIONS   DURATION   AGE   CONTAINERS     IMAGES                          SELECTOR
-s2job-ard-campaign-worker   3/1 of 3      100m       28h   ard-campaign   satapps/ard-workflow-s2:1.2.2   controller-uid=302c9874-0e24-4977-9360-bc8cfc76df96
+s2job-ard-campaign-worker   3/1 of 3      100m       28h   ard-campaign   satapps/ard-workflow-s2:1.3.0   controller-uid=302c9874-0e24-4977-9360-bc8cfc76df96
 ```
 
 Alternatively, making sure that the relevant `Pod`s are in the `Completed` status is another possible route. E.g.:
@@ -343,7 +351,7 @@ Configuration options would be along these lines for a production system:
 worker:
   image:
     repository: "satapps/ard-workflow-ls"
-    tag: "1.2.1"
+    tag: "1.3.0"
   parallelism: 28
   env:
     - name: LOGLEVEL
@@ -385,7 +393,7 @@ Configuration options would be along these lines for a production system:
 worker:
   image:
     repository: "satapps/ard-workflow-s1"
-    tag: "1.2.3"
+    tag: "1.3.0"
   parallelism: 14
   env:
     - name: LOGLEVEL
@@ -431,7 +439,7 @@ aws:
   secretAccessKey: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYINVALIDKEY"
 ```
 
-### Sentinel-2 L1C to L2A preparation
+### Sentinel-2 L1C to L2A preparation (Sen2Cor v2.08)
 
 For Sentinel-2 L1C to L2A preparation, jobs are defined as per example below:
 
@@ -444,8 +452,8 @@ Configuration options would be along these lines for a production system:
 ```yaml
 worker:
   image:
-    repository: "satapps/ard-workflow-s2-l1c"
-    tag: "1.2.5"
+    repository: "satapps/ard-workflow-s2-l1c-v8"
+    tag: "1.3.0"
   parallelism: 14
   env:
     - name: LOGLEVEL
@@ -483,7 +491,7 @@ aws:
   secretAccessKey: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYINVALIDKEY"
 ```
 
-### Water classification
+### Water classification (WOFS)
 
 For water classification products, jobs are defined as per example below:
 
@@ -497,7 +505,7 @@ Configuration options would be along these lines for a production system:
 worker:
   image:
     repository: "satapps/ard-workflow-water-classification"
-    tag: "1.2.1"
+    tag: "1.3.0"
   parallelism: 28
   env:
     - name: LOGLEVEL
