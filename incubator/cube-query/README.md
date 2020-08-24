@@ -27,15 +27,6 @@ master:
   ##
   persistence:
     enabled: false
-
-## Redis config file
-## ref: https://redis.io/topics/config
-##
-configmap: |-
-  # Enable AOF https://redis.io/topics/persistence#append-only-file
-  appendonly yes
-  # Disable RDB persistence, AOF persistence already enabled.
-  save ""
 ```
 
 For a production environment, we might have instead:
@@ -59,15 +50,6 @@ master:
     enabled: true
     storageClass: "fast"
     size: "1Gi"
-
-## Redis config file
-## ref: https://redis.io/topics/config
-##
-configmap: |-
-  # Enable AOF https://redis.io/topics/persistence#append-only-file
-  appendonly yes
-  # Disable RDB persistence, AOF persistence already enabled.
-  save ""
 ```
 
 For the full set of configurable options see [values.yaml](https://github.com/helm/charts/blob/master/stable/redis/values.yaml).
