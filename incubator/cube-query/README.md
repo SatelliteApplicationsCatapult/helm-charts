@@ -56,7 +56,7 @@ For the full set of configurable options see [values.yaml](https://github.com/bi
 In order to deploy the Master issue the following:
 
 ```bash
-NAMESPACE=ard
+NAMESPACE=cubequery
 
 kubectl create namespace $NAMESPACE
 
