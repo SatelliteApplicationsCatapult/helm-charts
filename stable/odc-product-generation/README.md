@@ -33,15 +33,6 @@ master:
   ##
   persistence:
     enabled: false
-
-## Redis config file
-## ref: https://redis.io/topics/config
-##
-configmap: |-
-  # Enable AOF https://redis.io/topics/persistence#append-only-file
-  appendonly yes
-  # Disable RDB persistence, AOF persistence already enabled.
-  save ""
 ```
 
 For a production environment, we might have instead:
@@ -49,7 +40,7 @@ For a production environment, we might have instead:
 ```yaml
 ## Cluster settings
 cluster:
-  enabled: true
+  enabled: false
 
 ## Use password authentication
 usePassword: false
@@ -62,32 +53,27 @@ master:
   ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
   ##
   persistence:
-    enabled: true
     storageClass: "fast"
     size: "1Gi"
-
-## Redis config file
-## ref: https://redis.io/topics/config
-##
-configmap: |-
-  # Enable AOF https://redis.io/topics/persistence#append-only-file
-  appendonly yes
-  # Disable RDB persistence, AOF persistence already enabled.
-  save ""
 ```
 
-For the full set of configurable options see [values.yaml](https://github.com/helm/charts/blob/master/stable/redis/values.yaml).
+For the full set of configurable options see [values.yaml](https://github.com/bitnami/charts/blob/master/bitnami/redis/values.yaml).
 
 In order to deploy the Master issue the following:
 
 ```bash
 NAMESPACEODCPROD=odc-routine-products
 
+kubectl create namespace $NAMESPACEODCPROD
+
 RELEASEREDIS=redis
 
-helm upgrade --install $RELEASEREDIS stable/redis \
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo update
+
+helm upgrade --install $RELEASEREDIS bitnami/redis \
   --namespace $NAMESPACEODCPROD \
-  --version 9.1.3 \
+  --version 10.7.16 \
   --values values-redis.yaml
 ```
 
