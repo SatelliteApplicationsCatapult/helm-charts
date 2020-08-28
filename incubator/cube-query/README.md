@@ -8,7 +8,13 @@ The solution provided here is suitable to deploy the API to produce on-demand da
 
 ## Redis Master server deployment
 
-It's necessary to first create a *values-redis.yaml* file. As example, we might have:
+It's necessary to first create a *values-redis.yaml* file. umes/
+  ##
+  persistence:
+    enabled: false
+```
+
+For a production environment, we might have instead:
 
 ```yaml
 ## Cluster settings
@@ -17,22 +23,36 @@ cluster:
 
 ## Use password authentication
 usePassword: false
+
+##
+## Redis Master parameters
+##
+master:
+  ## Enable persistence using Persistent Volume Claims
+  ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+  ##
+  persistence:
+    storageClass: "fast"
+    size: "1Gi"
 ```
 
-For the full set of configurable options see [values.yaml](https://github.com/helm/charts/blob/master/stable/redis/values.yaml).
+For the full set of configurable options see [values.yaml](https://github.com/bitnami/charts/blob/master/bitnami/redis/values.yaml).
 
-In order to deploy the Redis Master with Helm 3 issue the following:
+In order to deploy the Master issue the following:
 
 ```bash
-NAMESPACE=cubequery
+NAMESPACEARD=ard
 
-kubectl create namespace $NAMESPACE
+kubectl create namespace $NAMESPACEARD
 
 RELEASEREDIS=redis
 
-helm upgrade --install $RELEASEREDIS stable/redis \
-  --namespace $NAMESPACE \
-  --version 9.1.3 \
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo update
+
+helm upgrade --install $RELEASEREDIS bitnami/redis \
+  --namespace $NAMESPACEARD \
+  --version 10.7.16 \
   --values values-redis.yaml
 ```
 
