@@ -56,9 +56,9 @@ For the full set of configurable options see [values.yaml](https://github.com/bi
 In order to deploy the Master issue the following:
 
 ```bash
-NAMESPACE=cubequery
+NAMESPACECQ=cubequery
 
-kubectl create namespace $NAMESPACE
+kubectl create namespace $NAMESPACECQ
 
 RELEASEREDIS=redis
 
@@ -66,7 +66,7 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
 
 helm upgrade --install $RELEASEREDIS bitnami/redis \
-  --namespace $NAMESPACE \
+  --namespace $NAMESPACECQ \
   --version 10.7.16 \
   --values values-redis.yaml
 ```
@@ -89,6 +89,10 @@ Make Helm aware of the [Satellite Applications Catapult Helm chart repository](h
 ```bash
 helm repo add satapps https://satelliteapplicationscatapult.github.io/helm-charts
 helm repo update
+
+helm search repo cube-query
+NAME                    CHART VERSION   APP VERSION     DESCRIPTION
+satapps/cube-query      1.0.0           1.6.5           A Helm chart for deploying Cube Query with Kube...
 ```
 
 It's then necessary to create a *values-cubequery.yaml* file specific to the Kubernetes cluster and architecture in use.\
@@ -155,6 +159,17 @@ worker:
 aws:
   accessKeyId: "AKIAIOSFODNN7INVALID"
   secretAccessKey: "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"
+```
+
+To install the Chart with the release name `cq`:
+
+```bash
+RELEASECQ=cq
+
+helm upgrade --install $RELEASECQ satapps/cube-query \
+  --namespace $NAMESPACECQ \
+  --version 1.0.0 \
+  --values values-cubequery.yaml
 ```
 
 ## Default Configuration
