@@ -133,6 +133,16 @@ server:
   env:
     - name: APP_RESULT_DIR
       value: "/data/"
+  service:
+    type: ClusterIP
+  ingress:
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/enable-cors: "true"
+    hosts:
+      - host: cubequery.example.com
+        paths:
+          - /
 
 worker:
   replicaCount: 7
