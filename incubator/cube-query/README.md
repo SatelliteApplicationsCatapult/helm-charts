@@ -82,7 +82,14 @@ By default, this Chart will deploy the following:
 > **Tip**: See the [Kubernetes Service Type Docs](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types)
 for the differences between ClusterIP, NodePort, and LoadBalancer.
 
-### Installing the Chart - WIP
+### Installing the Chart
+
+Make Helm aware of the [Satellite Applications Catapult Helm chart repository](https://satelliteapplicationscatapult.github.io/helm-charts/), so you will be able to install the ARD chart from it without having to use a long URL name:
+
+```bash
+helm repo add satapps https://satelliteapplicationscatapult.github.io/helm-charts
+helm repo update
+```
 
 It's then necessary to create a *values-cubequery.yaml* file specific to the Kubernetes cluster and architecture in use.\
 For the full set of configurable options see [values.yaml](values.yaml).
