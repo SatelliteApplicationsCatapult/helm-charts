@@ -84,7 +84,7 @@ for the differences between ClusterIP, NodePort, and LoadBalancer.
 
 ### Installing the Chart
 
-Make Helm aware of the [Satellite Applications Catapult Helm chart repository](https://satelliteapplicationscatapult.github.io/helm-charts/), so you will be able to install the ARD chart from it without having to use a long URL name:
+Make Helm aware of the [Satellite Applications Catapult Helm chart repository](https://satelliteapplicationscatapult.github.io/helm-charts/), so you will be able to install the Cube Query chart from it without having to use a long URL name:
 
 ```bash
 helm repo add satapps https://satelliteapplicationscatapult.github.io/helm-charts
