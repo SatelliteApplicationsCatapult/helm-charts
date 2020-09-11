@@ -156,3 +156,60 @@ aws:
   accessKeyId: "AKIAIOSFODNN7INVALID"
   secretAccessKey: "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"
 ```
+
+## Default Configuration
+
+The following tables list the configurable parameters of the Chart and their default values.
+
+### Server
+
+| Parameter                 | Description                     | Default                    |
+|---------------------------|---------------------------------|----------------------------|
+| `server.image.repository` | Container image name            | `satapps/cubequery-server` |
+| `server.image.tag`        | Container image tag             | `1.6.5`                    |
+| `server.image.pullPolicy` | Container image pull policy     | `IfNotPresent`             |
+| `server.service.type`     | k8s service type                | `LoadBalancer`             |
+| `server.service.port`     | k8s service port                | `5000`                     |
+| `server.ingress.enabled`  | True to create a server ingress | `false`                    |
+| `server.replicaCount`     | k8s deployment replicas         | `1`                        |
+| `server.resources`        | Container resources             | `{}`                       |
+| `server.env`              | Container environment variables | `{}`                       |
+| `server.tolerations`      | Tolerations                     | `[]`                       |
+| `server.nodeSelector`     | nodeSelector                    | `{}`                       |
+| `server.affinity`         | Container affinity              | `{}`                       |
+
+### Worker
+
+| Parameter                 | Description                     | Default                    |
+| --------------------------| --------------------------------| ---------------------------|
+| `worker.image.repository` | Container image name            | `satapps/cubequery-worker` |
+| `worker.image.tag`        | Container image tag             | `1.6.5`                    |
+| `worker.image.pullPolicy` | Container image pull policy     | `IfNotPresent`             |
+| `worker.resources`        | Container resources             | `{}`                       |
+| `worker.env`              | Container environment variables | `{}`                       |
+| `worker.nodeSelector`     | nodeSelector                    | `{}`                       |
+| `worker.tolerations`      | Tolerations                     | `[]`                       |
+| `worker.affinity`         | Container affinity              | `{}`                       |
+
+### Data Cube DB Connection Parameters
+
+| Parameter             | Description | Default                                              |
+| ----------------------| ------------| -----------------------------------------------------|
+| `datacubeDB.host`     | Host        | `datacubedb-postgresql.datacubedb.svc.cluster.local` |
+| `datacubeDB.database` | DB name     | `datacube`                                           |
+| `datacubeDB.user`     | User        | `postgres`                                           |
+| `datacubeDB.password` | Password    | `localuser1234`                                      |
+
+### Redis Master Connection Parameters
+
+| Parameter          | Description | Default        |
+| -------------------| ------------| ---------------|
+| `redisServiceHost` | Host        | `redis-master` | 
+
+### AWS
+
+| Parameter             | Description    | Default                                    |
+|-----------------------|----------------|--------------------------------------------|
+| `aws.accessKeyId`     | AWS key id     | `AKIAIOSFODNN7INVALID`                     |
+| `aws.secretAccessKey` | AWS secret key | `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` |
+
