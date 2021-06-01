@@ -32,7 +32,7 @@ server:
 worker:
   image:
     repository: "satapps/cubequery-worker"
-    tag: "953e900"
+    tag: "b750553"
     pullPolicy: IfNotPresent
   imagePullSecrets: []
   replicaCount: 3
