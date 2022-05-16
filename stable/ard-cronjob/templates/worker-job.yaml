@@ -1,0 +1,106 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "ard-campaign.fullname" . }}-worker
+  labels:
+{{ include "ard-campaign.labels" . | indent 4 }}
+spec:
+  schedule: {{ .Values.worker.schedule }}
+  concurrencyPolicy: Forbid
+  parallelism: {{ .Values.worker.parallelism }}
+{{- with .Values.worker.ttlSeconds }}
+  ttlSecondsAfterFinished: {{ .Values.worker.ttlSeconds }}
+{{- end }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "ard-campaign.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        component: worker
+    spec:
+      restartPolicy: OnFailure
+    {{- with .Values.worker.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      initContainers:
+        - name: init-worker
+          image: busybox:1.28
+          env:
+            - name: REDIS_SERVICE_HOST
+              value: "{{ .Values.redisServiceHost }}"
+          command: ['sh', '-c', 'until nslookup $REDIS_SERVICE_HOST; do echo Waiting for redis-master; sleep 2; done;']
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag }}"
+          imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.worker.resources | nindent 12 }}
+          env:
+            - name: REDIS_SERVICE_HOST
+              value: "{{ .Values.redisServiceHost }}"
+            - name: ASF_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ard-campaign.fullname" . }}
+                  key: asf_username
+            - name: ASF_PWD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ard-campaign.fullname" . }}
+                  key: asf_password
+            - name: COPERNICUS_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ard-campaign.fullname" . }}
+                  key: copernicus_username
+            - name: COPERNICUS_PWD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ard-campaign.fullname" . }}
+                  key: copernicus_password
+            - name: GCP_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ard-campaign.fullname" . }}
+                  key: gcp_private_key
+            - name: GCP_CLIENT_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ard-campaign.fullname" . }}
+                  key: gcp_client_email
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ard-campaign.fullname" . }}
+                  key: aws_access_key_id
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ard-campaign.fullname" . }}
+                  key: aws_secret_access_key
+            {{- if .Values.worker.env }}
+            {{- $extraEnvType := typeOf .Values.worker.env }}
+            {{- /* If we have a list, embed that here directly. This allows for complex configuration from configmap, downward API, etc. */}}
+            {{- if eq $extraEnvType "[]interface {}" }}
+            {{- .Values.worker.env | toYaml | trimSuffix "\n" | nindent 12 }}
+            {{- else if eq $extraEnvType "map[string]interface {}" }}
+            {{- /* If we have a map, treat those as key-value pairs. */}}
+            {{- range $key, $value := .Values.worker.env }}
+            - name: {{ $key | quote }}
+              value: {{ $value | quote }}
+            {{- end }}
+            {{- end }}
+            {{- end }}
+    {{- with .Values.worker.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.worker.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.worker.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

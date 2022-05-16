@@ -1,0 +1,19 @@
+{{ if .Values.jupyter.enabled -}}
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "ard-campaign.fullname" . }}-test-jupyter-connection"
+  labels:
+{{ include "ard-campaign.labels" . | indent 4 }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args:  ['{{ include "ard-campaign.fullname" . }}-jupyter:{{ .Values.jupyter.service.port }}']
+  restartPolicy: Never
+
+{{- end }}
