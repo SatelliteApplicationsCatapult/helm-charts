@@ -1,0 +1,35 @@
+# Default values for ard-campaign.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+redisServiceHost: "redis-master"
+
+worker:
+  image:
+    repository: "satapps/ard-workflow-s2"
+    tag: "1.3.0"
+    pullPolicy: IfNotPresent
+  schedule: "*/5 * * * *"
+  imagePullSecrets: []
+  parallelism: 3
+  resources: {}
+  env: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+asf:
+  username: "invaliduser"
+  password: "invalidpassword"
+
+copernicus:
+  username: "invaliduser"
+  password: "invalidpassword"
+
+gcp:
+  privateKey: "-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----"
+  clientEmail: "invalid@nvalid.iam.gserviceaccount.com"
+
+aws:
+  accessKeyId: "AKIAIOSFODNN7INVALID"
+  secretAccessKey: "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"
