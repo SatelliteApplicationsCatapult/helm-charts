@@ -5,7 +5,7 @@ metadata:
   labels:
 {{ include "ard-campaign.labels" . | indent 4 }}
 spec:
-  schedule: {{ .Values.worker.schedule }}
+  schedule: "{{ .Values.worker.schedule }}"
   concurrencyPolicy: Forbid
   parallelism: {{ .Values.worker.parallelism }}
 {{- with .Values.worker.ttlSeconds }}
