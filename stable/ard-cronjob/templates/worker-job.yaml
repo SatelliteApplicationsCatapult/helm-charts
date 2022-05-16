@@ -1,9 +1,9 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ include "ard-campaign.fullname" . }}-worker
+  name: {{ include "ard-cronjob.fullname" . }}-worker
   labels:
-{{ include "ard-campaign.labels" . | indent 4 }}
+{{ include "ard-cronjob.labels" . | indent 4 }}
 spec:
   schedule: "{{ .Values.worker.schedule }}"
   concurrencyPolicy: Forbid
@@ -16,7 +16,7 @@ spec:
       template:
         metadata:
           labels:
-            app.kubernetes.io/name: {{ include "ard-campaign.name" . }}
+            app.kubernetes.io/name: {{- include "ard-cronjob.name" . }}
             app.kubernetes.io/instance: {{ .Release.Name }}
             component: worker
         spec:
@@ -37,42 +37,42 @@ spec:
                 - name: ASF_USERNAME
                   valueFrom:
                     secretKeyRef:
-                      name: {{ include "ard-campaign.fullname" . }}
+                      name: {{ include "ard-cronjob.fullname" . }}
                       key: asf_username
                 - name: ASF_PWD
                   valueFrom:
                     secretKeyRef:
-                      name: {{ include "ard-campaign.fullname" . }}
+                      name: {{ include "ard-cronjob.fullname" . }}
                       key: asf_password
                 - name: COPERNICUS_USERNAME
                   valueFrom:
                     secretKeyRef:
-                      name: {{ include "ard-campaign.fullname" . }}
+                      name: {{ include "ard-cronjob.fullname" . }}
                       key: copernicus_username
                 - name: COPERNICUS_PWD
                   valueFrom:
                     secretKeyRef:
-                      name: {{ include "ard-campaign.fullname" . }}
+                      name: {{ include "ard-cronjob.fullname" . }}
                       key: copernicus_password
                 - name: GCP_PRIVATE_KEY
                   valueFrom:
                     secretKeyRef:
-                      name: {{ include "ard-campaign.fullname" . }}
+                      name: {{ include "ard-cronjob.fullname" . }}
                       key: gcp_private_key
                 - name: GCP_CLIENT_EMAIL
                   valueFrom:
                     secretKeyRef:
-                      name: {{ include "ard-campaign.fullname" . }}
+                      name: {{ include "ard-cronjob.fullname" . }}
                       key: gcp_client_email
                 - name: AWS_ACCESS_KEY_ID
                   valueFrom:
                     secretKeyRef:
-                      name: {{ include "ard-campaign.fullname" . }}
+                      name: {{ include "ard-cronjob.fullname" . }}
                       key: aws_access_key_id
                 - name: AWS_SECRET_ACCESS_KEY
                   valueFrom:
                     secretKeyRef:
-                      name: {{ include "ard-campaign.fullname" . }}
+                      name: {{ include "ard-cronjob.fullname" . }}
                       key: aws_secret_access_key
                 {{- if .Values.worker.env }}
                 {{- $extraEnvType := typeOf .Values.worker.env }}
