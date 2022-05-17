@@ -7,30 +7,24 @@ metadata:
 spec:
   schedule: "{{ .Values.worker.schedule }}"
   concurrencyPolicy: Forbid
-  parallelism: {{ .Values.worker.parallelism }}
 {{- with .Values.worker.ttlSeconds }}
   ttlSecondsAfterFinished: {{ .Values.worker.ttlSeconds }}
 {{- end }}
   jobTemplate:
     spec:
       template:
-        metadata:
-          labels:
-            app.kubernetes.io/name: {{ include "ard-cronjob.name" . }}
-            app.kubernetes.io/instance: {{ .Release.Name }}
-            component: worker
         spec:
           restartPolicy: OnFailure
         {{- with .Values.worker.imagePullSecrets }}
           imagePullSecrets:
-            {{- toYaml . | nindent 8 }}
+            {{- toYaml . | nindent 12 }}
         {{- end }}
           containers:
             - name: {{ .Chart.Name }}
               image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag }}"
               imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
               resources:
-                {{- toYaml .Values.worker.resources | nindent 12 }}
+                {{- toYaml .Values.worker.resources | nindent 16 }}
               env:
                 - name: REDIS_SERVICE_HOST
                   value: "{{ .Values.redisServiceHost }}"
@@ -78,7 +72,7 @@ spec:
                 {{- $extraEnvType := typeOf .Values.worker.env }}
                 {{- /* If we have a list, embed that here directly. This allows for complex configuration from configmap, downward API, etc. */}}
                 {{- if eq $extraEnvType "[]interface {}" }}
-                {{- .Values.worker.env | toYaml | trimSuffix "\n" | nindent 12 }}
+                {{- .Values.worker.env | toYaml | trimSuffix "\n" | nindent 16 }}
                 {{- else if eq $extraEnvType "map[string]interface {}" }}
                 {{- /* If we have a map, treat those as key-value pairs. */}}
                 {{- range $key, $value := .Values.worker.env }}
@@ -89,13 +83,13 @@ spec:
                 {{- end }}
         {{- with .Values.worker.nodeSelector }}
           nodeSelector:
-            {{- toYaml . | nindent 8 }}
+            {{- toYaml . | nindent 12 }}
         {{- end }}
         {{- with .Values.worker.affinity }}
           affinity:
-            {{- toYaml . | nindent 8 }}
+            {{- toYaml . | nindent 12 }}
         {{- end }}
         {{- with .Values.worker.tolerations }}
           tolerations:
-            {{- toYaml . | nindent 8 }}
+            {{- toYaml . | nindent 12 }}
         {{- end }}
