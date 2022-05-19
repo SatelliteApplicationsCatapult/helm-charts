@@ -12,8 +12,8 @@ spec:
 {{- end }}
   jobTemplate:
     spec:
-      parallelism: {{ .Value.worker.parallelism }}  
-      completions: {{ .Value.worker.parallelism }}
+      parallelism: {{ .Values.worker.parallelism }}  
+      completions: {{ .Values.worker.parallelism }}
       template:
         spec:
           restartPolicy: OnFailure
