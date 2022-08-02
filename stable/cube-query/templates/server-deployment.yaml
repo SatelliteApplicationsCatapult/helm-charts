@@ -66,6 +66,10 @@ spec:
             defaultMode: 0755
             name: users-conf
           name: users-conf
+        - configMap:
+            defaultMode: 420
+            name: datacube-conf
+          name: datacube-conf
     {{- end }}
     {{- with .Values.server.nodeSelector }}
       nodeSelector:
